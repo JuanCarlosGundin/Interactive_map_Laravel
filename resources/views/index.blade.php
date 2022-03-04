@@ -20,6 +20,13 @@
 </head>
 
 <body>
+    <input type="checkbox" id="Monumento" value="Monumento" onclick="mostrarmapaJS()" >Monumentos
+    <input type="checkbox" id="Museos" value="Museo" onclick="mostrarmapaJS()" >Museos
+    <input type="checkbox" id="Restaurantes" value="Restaurante" onclick="mostrarmapaJS()" >Restaurantes
+    <input type="checkbox" id="Metro" value="Metro" onclick="mostrarmapaJS()" >Metros
+    <input type="checkbox" id="Hotel" value="Hotel" onclick="mostrarmapaJS()" >Hoteles
+    <input type="checkbox" id="Mercado" value="Mercado" onclick="mostrarmapaJS()" >Mercados
+    <br>
     <!-- onclick="getLocation();" -->
     <div id="map"></div>
     <br>
