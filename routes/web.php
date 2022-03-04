@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MapaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Vista mapa temporal
+Route::get('mapa',[MapaController::class,'mapa']);
+Route::post('mostrarmapas',[MapaController::class,'mostrarmapas']);
