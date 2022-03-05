@@ -93,7 +93,7 @@ function area() {
         [41.378733, 2.163077]
     ];
 
-    var polygon = L.polygon(latlngs, { color: 'red' }).addTo(map);
+    var polygon = L.polygon(latlngs, { fillOpacity: '0' }).addTo(map);
 }
 
 function getLocation() {
