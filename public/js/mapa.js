@@ -2,6 +2,7 @@ window.onload = function() {
     lat = 0;
     lon = 0;
     routingControl = {};
+    mapMarkers = [];
     markerdrag = {};
 
     getLocation()
@@ -32,51 +33,55 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 map.setView([41.3533441, 2.1122431], 12);
 
-function mostrarmapaJS() {
+function mostrarmapaJS(id) {
 
     var formData = new FormData();
     formData.append('_token', document.getElementById('token').getAttribute("content"));
+    formData.append('id',id);
+    filtro=document.getElementById('etiqueta').value
+    //aqui comprobamos que la etiqueta está vacia o llena con información
+    if(filtro==""){formData.append('etiqueta', 666)}else{formData.append('etiqueta', document.getElementById('etiqueta').value)}
     //ZONA DE FILTRADO
     //filtramos por monumento
     var Monumento = document.getElementById("Monumento");
     if (Monumento.checked) {
         formData.append('Monumento', document.getElementById('Monumento').value)
-    }else{
+    } else {
         formData.append('Monumento', 'nada')
     }
     //filtramos por museo
     var Museos = document.getElementById("Museos");
     if (Museos.checked) {
         formData.append('Museo', document.getElementById('Museos').value)
-    }else{
+    } else {
         formData.append('Museo', 'nada')
     }
     //filtramos por Restaurantes
     var Restaurantes = document.getElementById("Restaurantes");
     if (Restaurantes.checked) {
         formData.append('Restaurante', document.getElementById('Restaurantes').value)
-    }else{
+    } else {
         formData.append('Restaurante', 'nada')
     }
     //filtramos por metro
     var Metro = document.getElementById("Metro");
     if (Metro.checked) {
         formData.append('Metro', document.getElementById('Metro').value)
-    }else{
-        formData.append('Metro', 'nada') 
+    } else {
+        formData.append('Metro', 'nada')
     }
     //filtramos por Mercado
     var Mercado = document.getElementById("Mercado");
     if (Mercado.checked) {
         formData.append('Mercado', document.getElementById('Mercado').value)
-    }else{
-        formData.append('Hotel','nada')
+    } else {
+        formData.append('Hotel', 'nada')
     }
     //filtramos por Hotel
     var Hotel = document.getElementById("Hotel");
     if (Hotel.checked) {
         formData.append('Hotel', document.getElementById('Hotel').value)
-    }else{
+    } else {
         formData.append('Hotel', 'nada')
     }
     //TERMINA FILTRADO
@@ -86,6 +91,12 @@ function mostrarmapaJS() {
     ajax.onreadystatechange = function() {
         if (ajax.readyState == 4 && ajax.status == 200) {
             var respuesta = JSON.parse(this.responseText);
+            if (mapMarkers.length != 0) {
+                for (let z = 0; z < mapMarkers.length; z++) {
+                    map.removeLayer(mapMarkers[z]);
+                }
+                mapMarkers = [];
+            }
             for (let i = 0; i < respuesta.length; i++) {
                 popups(respuesta[i].direccion_loc, respuesta[i].nom_loc)
 
@@ -106,8 +117,10 @@ function popups(direccion, nombre) {
         }
         var marker = L.marker(results.results[0].latlng).addTo(map)
             .bindPopup(nombre).openPopup();
+        mapMarkers.push(marker)
         marker._icon.classList.add("huechange");
         marker.on('click', function(event) {
+            console.log(this);
             if (Object.keys(routingControl).length != 0) {
                 map.removeControl(routingControl);
             }
@@ -115,9 +128,11 @@ function popups(direccion, nombre) {
             var position = marker.getLatLng();
             routingControl = L.Routing.control({
                 waypoints: [
-                        L.latLng(lat, lon),
-                        L.latLng(position.lat, position.lng)
-                    ] //,show: false
+                    L.latLng(lat, lon),
+                    L.latLng(position.lat, position.lng)
+                ],
+                language: 'es',
+                show: false
             }).addTo(map);
             map.setView([lat, lon], 15);
         });
@@ -135,7 +150,7 @@ function area() {
         [41.378733, 2.163077]
     ];
 
-    var polygon = L.polygon(latlngs, { color: 'red' }).addTo(map);
+    var polygon = L.polygon(latlngs, { fillOpacity: '0' }).addTo(map);
 }
 
 function getLocation() {
@@ -165,9 +180,11 @@ function onMapClick(e) {
     }
     routingControl = L.Routing.control({
         waypoints: [
-                L.latLng(lat, lon),
-                L.latLng(e.latlng.lat, e.latlng.lng)
-            ] //,show: false
+            L.latLng(lat, lon),
+            L.latLng(e.latlng.lat, e.latlng.lng)
+        ],
+        language: 'es',
+        show: false
     }).addTo(map);
     /* map.setView([lat, lon], 15); */
     markerdrag.on('dragend', function(event) {
@@ -178,9 +195,11 @@ function onMapClick(e) {
         var position = marker.getLatLng();
         routingControl = L.Routing.control({
             waypoints: [
-                    L.latLng(lat, lon),
-                    L.latLng(position.lat, position.lng)
-                ] //,show: false
+                L.latLng(lat, lon),
+                L.latLng(position.lat, position.lng)
+            ],
+            language: 'es',
+            show: false
         }).addTo(map);
         /* map.setView([lat, lon], 15); */
     });
