@@ -27,6 +27,7 @@
     <input type="checkbox" id="Metro" value="Metro" onclick="mostrarmapaJS(2)" checked>Metros
     <input type="checkbox" id="Hotel" value="Hotel" onclick="mostrarmapaJS(2)" checked>Hoteles
     <input type="checkbox" id="Mercado" value="Mercado" onclick="mostrarmapaJS(2)" checked>Mercados
+    <button onclick="mostrarmapaJS(2); return false;">FAVORITOS</button>
     <br>
     <!-- onclick="getLocation();" -->
     <div id="map"></div>
