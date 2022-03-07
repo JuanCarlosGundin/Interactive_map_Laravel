@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MapaController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+//Login
+Route::get('/',[UsuarioController::class, 'login']);
+Route::post('loginPost',[UsuarioController::class,'loginPost']);
 
 //Acceder a Vista Mapa
 Route::get('mapa',[MapaController::class,'mapa']);
