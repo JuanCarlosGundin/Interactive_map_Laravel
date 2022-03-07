@@ -26,7 +26,7 @@ function objetoAjax() {
     }
     return xmlhttp;
 }
-
+//seteamos el mapa, en la zona que nos interesa, en este caso el Raval
 var map = L.map('map');
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -34,9 +34,10 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 map.setView([41.3533441, 2.1122431], 12);
 
 function mostrarmapaJS(id) {
-
+    //Creamos el formdata que se enviara al controller
     var formData = new FormData();
     formData.append('_token', document.getElementById('token').getAttribute("content"));
+    //id del usuario el cual tenemos que filtrar segun sus etiquetas
     formData.append('id', id);
     filtro = document.getElementById('etiqueta').value
         //aqui comprobamos que la etiqueta está vacia o llena con información
@@ -91,13 +92,16 @@ function mostrarmapaJS(id) {
     ajax.onreadystatechange = function() {
         if (ajax.readyState == 4 && ajax.status == 200) {
             var respuesta = JSON.parse(this.responseText);
+            //si los marquers existen este if lo remueve no problemm
             if (mapMarkers.length != 0) {
                 for (let z = 0; z < mapMarkers.length; z++) {
+                    //función que remueve el mapa js 
                     map.removeLayer(mapMarkers[z]);
                 }
                 mapMarkers = [];
             }
             for (let i = 0; i < respuesta.length; i++) {
+                //iteramos los marquers con la información recibida
                 popups(respuesta[i].direccion_loc, respuesta[i].nom_loc)
 
             }
