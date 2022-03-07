@@ -41,6 +41,17 @@ class MapaController extends Controller
          ,[$id,"%".$etiqueta."%"]);}
         return response()->json($datos);
     }
+    //mostrar favorito
+    public function mostrarfavorito(Request $request) {
+        $id= $request->input('id');
+        $datos=DB::select('select * from tbl_favoritos
+        INNER JOIN tbl_localizaciones ON tbl_favoritos.id_localizacion = tbl_localizaciones.id 
+        INNER JOIN tbl_users ON tbl_favoritos.id_user = tbl_users.id 
+        where 
+        tbl_favoritos.id_user = ?'
+        ,[$id]);
+        return response()->json($datos);
+    }
     //Zona Administrador
     public function vistaAdmin() {
         return view("admin");

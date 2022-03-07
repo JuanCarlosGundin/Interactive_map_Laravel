@@ -106,6 +106,34 @@ function mostrarmapaJS(id) {
     ajax.send(formData)
 }
 
+//Función que muestra los favoritos del usuario en cuestiónç
+function favoritomapaJS(id) {
+    console.log("LLEGA")
+    var formData = new FormData();
+    formData.append('_token', document.getElementById('token').getAttribute("content"));
+    formData.append('id', id);
+    //TERMINA FILTRADO
+    /* Inicializar un objeto AJAX */
+    var ajax = objetoAjax();
+    ajax.open("POST", "mostrarfavorito", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            var respuesta = JSON.parse(this.responseText);
+            if (mapMarkers.length != 0) {
+                for (let z = 0; z < mapMarkers.length; z++) {
+                    map.removeLayer(mapMarkers[z]);
+                }
+                mapMarkers = [];
+            }
+            for (let i = 0; i < respuesta.length; i++) {
+                popups(respuesta[i].direccion_loc, respuesta[i].nom_loc)
+
+            }
+        }
+    }
+    ajax.send(formData)
+}
+
 function popups(direccion, nombre) {
 
     L.esri.Geocoding.geocode({

@@ -23,6 +23,8 @@ Route::post('loginPost',[UsuarioController::class,'loginPost']);
 Route::get('mapa',[MapaController::class,'mapa']);
 //mostrar markers del mapa
 Route::post('mostrarmapas',[MapaController::class,'mostrarmapas']);
+//mostrar markers favoritos en el mapa
+Route::post('mostrarfavorito',[MapaController::class,'mostrarfavorito']);
 
 //crud administrador
 //Acceder a vista Admin

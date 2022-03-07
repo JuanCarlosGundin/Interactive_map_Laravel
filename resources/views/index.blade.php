@@ -36,7 +36,7 @@
     <input type="checkbox" id="Metro" value="Metro" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Metros
     <input type="checkbox" id="Hotel" value="Hotel" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Hoteles
     <input type="checkbox" id="Mercado" value="Mercado" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Mercados
-    <button onclick="mostrarmapaJS(<?php echo $id; ?>); return false;">FAVORITOS</button>
+    <button onclick="favoritomapaJS(<?php echo $id; ?>); return false;">FAVORITOS</button>
     <br>
     <!-- onclick="getLocation();" -->
     <div id="map"></div>
