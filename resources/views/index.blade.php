@@ -1,3 +1,12 @@
+@if(!Session::get('mail_usu'))
+    <?php
+        //Si la session no esta definida te redirige al login.
+        return redirect()->to('/')->send();
+    ?>
+@endif
+<?php
+    $id= Session::get('id_usu');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,14 +29,14 @@
 </head>
 
 <body>
-    <input type="text" id="etiqueta" onkeyup="mostrarmapaJS(2); return false;">
-    <input type="checkbox" id="Monumento" value="Monumento" onclick="mostrarmapaJS(2)" checked>Monumentos
-    <input type="checkbox" id="Museos" value="Museo" onclick="mostrarmapaJS(2)" checked>Museos
-    <input type="checkbox" id="Restaurantes" value="Restaurante" onclick="mostrarmapaJS(2)" checked>Restaurantes
-    <input type="checkbox" id="Metro" value="Metro" onclick="mostrarmapaJS(2)" checked>Metros
-    <input type="checkbox" id="Hotel" value="Hotel" onclick="mostrarmapaJS(2)" checked>Hoteles
-    <input type="checkbox" id="Mercado" value="Mercado" onclick="mostrarmapaJS(2)" checked>Mercados
-    <button onclick="mostrarmapaJS(2); return false;">FAVORITOS</button>
+    <input type="text" id="etiqueta" onkeyup="mostrarmapaJS(<?php echo $id; ?>); return false;">
+    <input type="checkbox" id="Monumento" value="Monumento" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Monumentos
+    <input type="checkbox" id="Museos" value="Museo" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Museos
+    <input type="checkbox" id="Restaurantes" value="Restaurante" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Restaurantes
+    <input type="checkbox" id="Metro" value="Metro" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Metros
+    <input type="checkbox" id="Hotel" value="Hotel" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Hoteles
+    <input type="checkbox" id="Mercado" value="Mercado" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Mercados
+    <button onclick="mostrarmapaJS(<?php echo $id; ?>); return false;">FAVORITOS</button>
     <br>
     <!-- onclick="getLocation();" -->
     <div id="map"></div>
