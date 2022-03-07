@@ -4,6 +4,9 @@
         return redirect()->to('/')->send();
     ?>
 @endif
+<?php
+    $id= Session::get('id_usu')
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

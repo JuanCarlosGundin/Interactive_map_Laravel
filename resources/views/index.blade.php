@@ -1,9 +1,12 @@
 @if(!Session::get('mail_usu'))
     <?php
         //Si la session no esta definida te redirige al login.
-        return redirect()->to('admin')->send();
+        return redirect()->to('/')->send();
     ?>
 @endif
+<?php
+    $id= Session::get('id_usu');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,24 +26,21 @@
 
     <!-- Load Esri Leaflet from CDN -->
     <script src="https://unpkg.com/esri-leaflet@2.3.2/dist/esri-leaflet.js" integrity="sha512-6LVib9wGnqVKIClCduEwsCub7iauLXpwrd5njR2J507m3A2a4HXJDLMiSZzjcksag3UluIfuW1KzuWVI5n/cuQ==" crossorigin=""></script>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
-    <div>
-    </div>
-    <div>
-        <input type="checkbox" id="Monumento" value="Monumento" onclick="mostrarmapaJS()" >Monumentos
-        <input type="checkbox" id="Museos" value="Museo" onclick="mostrarmapaJS()" >Museos
-        <input type="checkbox" id="Restaurantes" value="Restaurante" onclick="mostrarmapaJS()" >Restaurantes
-        <input type="checkbox" id="Metro" value="Metro" onclick="mostrarmapaJS()" >Metros
-        <input type="checkbox" id="Hotel" value="Hotel" onclick="mostrarmapaJS()" >Hoteles
-        <input type="checkbox" id="Mercado" value="Mercado" onclick="mostrarmapaJS()" >Mercados
-    </div>
+    <input type="text" id="etiqueta" onkeyup="mostrarmapaJS(<?php echo $id; ?>); return false;">
+    <input type="checkbox" id="Monumento" value="Monumento" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Monumentos
+    <input type="checkbox" id="Museos" value="Museo" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Museos
+    <input type="checkbox" id="Restaurantes" value="Restaurante" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Restaurantes
+    <input type="checkbox" id="Metro" value="Metro" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Metros
+    <input type="checkbox" id="Hotel" value="Hotel" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Hoteles
+    <input type="checkbox" id="Mercado" value="Mercado" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Mercados
+    <button onclick="mostrarmapaJS(<?php echo $id; ?>); return false;">FAVORITOS</button>
+    <br>
     <!-- onclick="getLocation();" -->
     <div id="map"></div>
-    
+    <br>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.0/esri-leaflet-geocoder.css">
     <script src="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.0/esri-leaflet-geocoder.js"></script>
     <script src="js/mapa.js"></script>

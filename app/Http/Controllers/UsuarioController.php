@@ -92,14 +92,17 @@ class UsuarioController extends Controller
         $mail_usu=$datos_frm['mail_usu'];
         $contra=$datos_frm['contra_usu'];
         $contra_usu=md5($contra);
+        $id = DB::table("tbl_users")->where('mail_usu','=',$mail_usu)->where('contra_usu','=',$contra_usu)->first();
         $users = DB::table("tbl_users")->where('mail_usu','=',$mail_usu)->where('contra_usu','=',$contra_usu)->count();
         $tipouser = DB::table("tbl_users")->where('id_perfil','=','1')->where('mail_usu','=',$mail_usu)->count();
         if($users == 1 && $tipouser == 0){
             //Establecer la sesion
             $request->session()->put('mail_usu',$request->mail_usu);
+            $request->session()->put('id_usu',$id->id);
             return redirect('mapa');
         }elseif($users == 1 && $tipouser == 1){
             $request->session()->put('mail_admin',$request->mail_usu);
+            $request->session()->put('id_admin',$id->id);
             return redirect('admin');
         }else{
             //Redirigir al login
