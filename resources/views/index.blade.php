@@ -1,3 +1,9 @@
+@if(!Session::get('mail_usu'))
+    <?php
+        //Si la session no esta definida te redirige al login.
+        return redirect()->to('admin')->send();
+    ?>
+@endif
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,16 +28,19 @@
 </head>
 
 <body>
-    <input type="checkbox" id="Monumento" value="Monumento" onclick="mostrarmapaJS()" >Monumentos
-    <input type="checkbox" id="Museos" value="Museo" onclick="mostrarmapaJS()" >Museos
-    <input type="checkbox" id="Restaurantes" value="Restaurante" onclick="mostrarmapaJS()" >Restaurantes
-    <input type="checkbox" id="Metro" value="Metro" onclick="mostrarmapaJS()" >Metros
-    <input type="checkbox" id="Hotel" value="Hotel" onclick="mostrarmapaJS()" >Hoteles
-    <input type="checkbox" id="Mercado" value="Mercado" onclick="mostrarmapaJS()" >Mercados
-    <br>
+    <div>
+    </div>
+    <div>
+        <input type="checkbox" id="Monumento" value="Monumento" onclick="mostrarmapaJS()" >Monumentos
+        <input type="checkbox" id="Museos" value="Museo" onclick="mostrarmapaJS()" >Museos
+        <input type="checkbox" id="Restaurantes" value="Restaurante" onclick="mostrarmapaJS()" >Restaurantes
+        <input type="checkbox" id="Metro" value="Metro" onclick="mostrarmapaJS()" >Metros
+        <input type="checkbox" id="Hotel" value="Hotel" onclick="mostrarmapaJS()" >Hoteles
+        <input type="checkbox" id="Mercado" value="Mercado" onclick="mostrarmapaJS()" >Mercados
+    </div>
     <!-- onclick="getLocation();" -->
     <div id="map"></div>
-    <br>
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.0/esri-leaflet-geocoder.css">
     <script src="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.0/esri-leaflet-geocoder.js"></script>
     <script src="js/mapa.js"></script>

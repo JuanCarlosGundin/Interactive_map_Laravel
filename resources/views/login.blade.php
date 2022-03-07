@@ -23,8 +23,8 @@
         <h1>Log In</h1>  
         @csrf
         {{method_field('POST')}}
-        <input type="email" name="email" placeholder="E-mail">
-        <input type="password" name="pass" placeholder="Password">
+        <input type="email" name="mail_usu" placeholder="E-mail">
+        <input type="password" name="contra_usu" placeholder="Password">
         <input type="submit" value="Log in">
     </form>
     </div>
