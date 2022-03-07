@@ -15,10 +15,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Vista mapa temporal
+//Login
+Route::get('/',[UsuarioController::class, 'login']);
+Route::post('loginPost',[UsuarioController::class,'loginPost']);
+
+//Acceder a Vista Mapa
 Route::get('mapa',[MapaController::class,'mapa']);
+//mostrar markers del mapa
 Route::post('mostrarmapas',[MapaController::class,'mostrarmapas']);
 
-//Login
-Route::get('/login',[UsuarioController::class, 'login']);
-Route::post('loginPost',[UsuarioController::class,'loginPost']);
+//crud administrador
+//Acceder a vista Admin
+Route::get('admin',[MapaController::class,'vistaAdmin']);
+
+//leerJS
+Route::post('leer',[MapaController::class,'leer']);
+
+//eliminarJS
+Route::delete('eliminar/{id}',[MapaController::class,'eliminar']);
+
+//crearJS
+Route::post('crear',[MapaController::class,'crear']);
+
+//actualizarJS
+Route::put('actualizar/{id}',[MapaController::class,'actualizar']);
