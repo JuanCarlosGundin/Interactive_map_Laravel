@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\MapaController;
+use App\Http\Controllers\UsuarioController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 //Vista mapa temporal
 Route::get('mapa',[MapaController::class,'mapa']);
 Route::post('mostrarmapas',[MapaController::class,'mostrarmapas']);
+
+//Login
+Route::get('/login',[UsuarioController::class, 'login']);
+Route::post('loginPost',[UsuarioController::class,'loginPost']);
