@@ -109,4 +109,12 @@ class UsuarioController extends Controller
             return redirect('/');
         }
     }
+    public function logout(Request $request){
+        //Olvidas la sesion
+        $request->session()->forget('mail_usu');
+        $request->session()->forget('mail_admin');
+        //Eliminar todo
+        $request->session()->flush();
+        return redirect('/');
+    }
 }

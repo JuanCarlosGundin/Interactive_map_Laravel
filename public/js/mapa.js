@@ -98,7 +98,7 @@ function mostrarmapaJS(id) {
                 mapMarkers = [];
             }
             for (let i = 0; i < respuesta.length; i++) {
-                popups(respuesta[i].direccion_loc, respuesta[i].nom_loc)
+                popups(respuesta[i].direccion_loc, respuesta[i].nom_loc, respuesta[i].foto_loc, respuesta[i].descripcion_loc, respuesta[i].icono_loc, respuesta[i].tipo_loc)
 
             }
         }
@@ -106,7 +106,7 @@ function mostrarmapaJS(id) {
     ajax.send(formData)
 }
 
-function popups(direccion, nombre) {
+function popups(direccion, nombre, foto_loc, descripcion_loc, icono_loc, tipo_loc) {
 
     L.esri.Geocoding.geocode({
         apikey: 'AAPKbfa578cdbb364f19acd6f66898f69789JE8ubfzUeNcE_1-_m2wPRTzApVhYnHEmSOkCXQ-8Yn3wxhHQkRRyP69j7CkXt-ev'
@@ -120,6 +120,7 @@ function popups(direccion, nombre) {
         mapMarkers.push(marker)
         marker._icon.classList.add("huechange");
         marker.on('click', function(event) {
+            mostrarinfo(direccion, nombre, foto_loc, descripcion_loc);
             console.log(this);
             if (Object.keys(routingControl).length != 0) {
                 map.removeControl(routingControl);
@@ -137,6 +138,17 @@ function popups(direccion, nombre) {
             map.setView([lat, lon], 15);
         });
     });
+}
+
+function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
+    var info = document.getElementById("info");
+    var recarga = '';
+    recarga += '<p>' + nombre + '</p>';
+    recarga += '<p>' + foto_loc + '</p>';
+    recarga += '<p>' + descripcion_loc + '</p>';
+    recarga += '<p>' + direccion + '</p>';
+    info.innerHTML = recarga;
+
 }
 
 function area() {
