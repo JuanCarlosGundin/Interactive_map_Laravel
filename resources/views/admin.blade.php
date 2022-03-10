@@ -25,12 +25,16 @@
         <input type="file" class="form-control" id="foto_loc" name="foto_loc">
         </div>
         <div class="form-group">
+        <label class="col-form-label">Icono: 1-Metro, 2-Hotel, 3-Mercado, 4-Monumento, 5-Museo, 6-Restaurante</label>
+        <input type="number" class="form-control" id="id_icono" name="id_icono" required>
+        </div>
+        <div class="form-group">
         <label class="col-sm-2 col-form-label">Descripcion:</label>
-        <input type="text" class="form-control" id="descripcion_loc" name="descripcion_loc" placeholder="Introduce una descripcion" value="{{old('descripcion_loc')}}"><br>
+        <input type="text" class="form-control" id="descripcion_loc" name="descripcion_loc" placeholder="Introduce una descripcion" value="{{old('descripcion_loc')}}">
         </div>
         <div class="form-group">
         <label class="col-sm-2 col-form-label">Tipo:</label>
-        <input type="text" class="form-control" id="tipo_loc" name="tipo_loc" placeholder="Introduce un tipo" value="{{old('tipo_loc')}}"><br>
+        <input type="text" class="form-control" id="tipo_loc" name="tipo_loc" placeholder="Metro-Restaurante-Mercado-Museo-Monumento-Hotel" value="{{old('tipo_loc')}}"><br>
         </div>
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
