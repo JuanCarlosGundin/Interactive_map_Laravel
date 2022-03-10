@@ -58,6 +58,8 @@ function leerJS() {
             recarga += '<tr>';
             recarga += '<th scope="col">Nombre</th>';
             recarga += '<th scope="col">Direccion</th>';
+            recarga += '<th scope="col">Foto</th>';
+            recarga += '<th scope="col">Icono</th>';
             recarga += '<th scope="col">Descripcion</th>';
             recarga += '<th scope="col">Tipo</th>';
             recarga += '</tr>';
@@ -65,6 +67,8 @@ function leerJS() {
                 recarga += '<tr>';
                 recarga += '<td>' + respuesta[i].nom_loc + '</td>';
                 recarga += '<td>' + respuesta[i].direccion_loc + '</td>';
+                recarga += '<td>' + respuesta[i].foto_loc + '</td>';
+                recarga += '<td>' + respuesta[i].icono_loc + '</td>';
                 recarga += '<td>' + respuesta[i].descripcion_loc + '</td>';
                 recarga += '<td>' + respuesta[i].tipo_loc + '</td>';
                 recarga += '<td><button class="btn btn-secondary" onclick="openmodal(' + respuesta[i].id + ',`' + respuesta[i].nom_loc + '`,`' + respuesta[i].direccion_loc + '`,`' + respuesta[i].descripcion_loc + '`,`' + respuesta[i].tipo_loc + '`); return false;">Actualizar</button></td>';
@@ -82,6 +86,8 @@ function crearJS() {
     var message = document.getElementById('message');
     var nom_loc = document.getElementById('nom_loc').value;
     var direccion_loc = document.getElementById('direccion_loc').value;
+    var foto_loc = document.getElementById('foto_loc').files[0];
+    var icono_loc = document.getElementById('icono_loc').files[0];
     var descripcion_loc = document.getElementById('descripcion_loc').value;
     var tipo_loc = document.getElementById('tipo_loc').value;
     var formData = new FormData();
@@ -89,6 +95,8 @@ function crearJS() {
     formData.append('_method', 'POST');
     formData.append('nom_loc', nom_loc);
     formData.append('direccion_loc', direccion_loc);
+    formData.append('foto_loc', foto_loc);
+    formData.append('icono_loc', icono_loc);
     formData.append('descripcion_loc', descripcion_loc);
     formData.append('tipo_loc', tipo_loc);
 
@@ -100,10 +108,12 @@ function crearJS() {
             var respuesta = JSON.parse(this.responseText);
             if (respuesta.resultado == "OK") {
                 message.innerHTML = '<p class="green">Nota creada correctamente</p>';
-                nom_loc = "";
-                direccion_loc = "";
-                descripcion_loc = "";
-                tipo_loc = "";
+                document.getElementById('nom_loc').value = "";
+                document.getElementById('direccion_loc').value = "";
+                document.getElementById('foto_loc').value = "";
+                document.getElementById('icono_loc').value = "";
+                document.getElementById('descripcion_loc').value = "";
+                document.getElementById('tipo_loc').value = "";
             } else {
                 message.innerHTML = 'Ha habido un error: ' + respuesta.resultado;
             }
@@ -116,7 +126,7 @@ function crearJS() {
 function openmodal(id, nom_loc, direccion_loc, descripcion_loc, tipo_loc) {
     var modal = document.getElementById("myModal");
     var modalcontent = document.getElementById("modal-content");
-    modalcontent.innerHTML = "<form method='post' onsubmit='actualizarJS(" + id + "); return false;'><p>Nota #" + id + "</p><br><p>Nombre:</p><input type='text' name='nom_loc' id='nom' value='" + nom_loc + "'><br><p>Direccion:</p><input type='text' name='direccion_loc' id='direccion' value='" + direccion_loc + "'><br><p>Descripcion:</p><input type='text' name='descripcion_loc' id='descripcion' value='" + descripcion_loc + "'><br><p>Tipo:</p><input type='text' name='tipo_loc' id='tipo' value='" + tipo_loc + "'><br><button class= 'btn btn-secondary' type='submit' value='Edit'>Editar</button></form>";
+    modalcontent.innerHTML = "<form method='post' onsubmit='actualizarJS(" + id + "); return false;' enctype='multipart/form-data'><p>Nota #" + id + "</p><br><p>Nombre:</p><input type='text' name='nom_loc' id='nom' value='" + nom_loc + "'><br><p>Direccion:</p><input type='text' name='direccion_loc' id='direccion' value='" + direccion_loc + "'><br><p>Foto:</p><input type='file' name='foto_loc' id='foto'<br><p>Icono:</p><input type='file' name='icono_loc' id='icono' <br><p>Descripcion:</p><input type='text' name='descripcion_loc' id='descripcion' value='" + descripcion_loc + "'><br><p>Tipo:</p><input type='text' name='tipo_loc' id='tipo' value='" + tipo_loc + "'><br><button class= 'btn btn-secondary' type='submit' value='Edit'>Editar</button></form>";
     modal.style.display = "block";
 }
 
@@ -124,6 +134,8 @@ function actualizarJS(id) {
     var message = document.getElementById('message');
     var nom_loc = document.getElementById('nom').value;
     var direccion_loc = document.getElementById('direccion').value;
+    var foto_loc = document.getElementById('foto').files[0];
+    var icono_loc = document.getElementById('icono').files[0];
     var descripcion_loc = document.getElementById('descripcion').value;
     var tipo_loc = document.getElementById('tipo').value;
     var formData = new FormData();
@@ -131,6 +143,8 @@ function actualizarJS(id) {
     formData.append('_method', 'PUT');
     formData.append('nom_loc', nom_loc);
     formData.append('direccion_loc', direccion_loc);
+    formData.append('foto_loc', foto_loc);
+    formData.append('icono_loc', icono_loc);
     formData.append('descripcion_loc', descripcion_loc);
     formData.append('tipo_loc', tipo_loc);
 
