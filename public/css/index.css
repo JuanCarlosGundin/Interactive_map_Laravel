@@ -1,0 +1,40 @@
+.container {
+    width: 100%;
+}
+
+.index-div1 {
+    float: left;
+    width: 80vh;
+}
+
+.index-div2 {
+    width: 10vh;
+    float: right;
+}
+
+.index-div2 i {
+    color: #35B8B2;
+}
+
+.logoutic {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    width: 5vh;
+    float: right;
+}
+
+.bt-logout {
+    background-color: white;
+    border-color: black;
+    float: right;
+}
+
+.admin-div1 {
+    margin-left: 33%;
+    width: 12%;
+    float: right;
+}
+
+.map {
+    width: 100%;
+}

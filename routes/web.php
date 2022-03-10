@@ -18,13 +18,17 @@ use Illuminate\Support\Facades\Route;
 //Login
 Route::get('/',[UsuarioController::class, 'login']);
 Route::post('loginPost',[UsuarioController::class,'loginPost']);
+Route::get('logout',[UsuarioController::class,'logout']);
 
 //Acceder a Vista Mapa
 Route::get('mapa',[MapaController::class,'mapa']);
 //mostrar markers del mapa
 Route::post('mostrarmapas',[MapaController::class,'mostrarmapas']);
-//mostrar markers favoritos en el mapa
+//mostrar markers favoritos 
 Route::post('mostrarfavorito',[MapaController::class,'mostrarfavorito']);
+Route::post('comprobarfav',[MapaController::class,'comprobarfav']);
+Route::post('añadirfav',[MapaController::class,'añadirfav']);
+Route::post('borrarfav',[MapaController::class,'borrarfav']);
 
 //crud administrador
 //Acceder a vista Admin

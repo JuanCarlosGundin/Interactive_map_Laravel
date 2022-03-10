@@ -52,6 +52,30 @@ class MapaController extends Controller
         ,[$id]);
         return response()->json($datos);
     }
+
+    public function comprobarfav(Request $request) {
+        $id= $request->input('id_usu');
+        $nombre= $request->input('nombre');
+        $datos=DB::select('select * from tbl_favoritos
+        INNER JOIN tbl_localizaciones ON tbl_favoritos.id_localizacion = tbl_localizaciones.id 
+        INNER JOIN tbl_users ON tbl_favoritos.id_user = tbl_users.id 
+        where 
+        tbl_favoritos.id_user = ? and tbl_localizaciones.nom_loc like ?'
+        ,[$id,'%'.$nombre.'%']);
+        return response()->json($datos);
+    }
+    public function añadirfav(Request $request) {
+        $id= $request->input('id_usu');
+        $nombre= $request->input('nombre');
+        $id_loc=DB::select('select id from tbl_localizaciones
+        where nom_loc like ?'
+        ,['%'.$nombre.'%']);
+
+        DB::table('tbl_favoritos')->insert
+        (["id_user"=>$id,
+        "direccion_loc"=>$id_loc]);
+        return response()->json(array('resultado'=> 'OK'));
+    }
     //Zona Administrador
     public function vistaAdmin() {
         return view("admin");

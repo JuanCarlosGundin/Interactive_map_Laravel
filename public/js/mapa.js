@@ -34,6 +34,8 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 map.setView([41.3533441, 2.1122431], 12);
 
 function mostrarmapaJS(id) {
+    var idt = document.getElementById('usuarioID').value
+    console.log(idt)
     //Creamos el formdata que se enviara al controller
     var formData = new FormData();
     formData.append('_token', document.getElementById('token').getAttribute("content"));
@@ -102,7 +104,7 @@ function mostrarmapaJS(id) {
             }
             for (let i = 0; i < respuesta.length; i++) {
                 //iteramos los marquers con la información recibida
-                popups(respuesta[i].direccion_loc, respuesta[i].nom_loc)
+                popups(respuesta[i].direccion_loc, respuesta[i].nom_loc, respuesta[i].foto_loc, respuesta[i].descripcion_loc, respuesta[i].icono_loc, respuesta[i].tipo_loc,id)
 
             }
         }
@@ -112,7 +114,7 @@ function mostrarmapaJS(id) {
 
 //Función que muestra los favoritos del usuario en cuestiónç
 function favoritomapaJS(id) {
-    console.log("LLEGA")
+    console.log(id)
     var formData = new FormData();
     formData.append('_token', document.getElementById('token').getAttribute("content"));
     formData.append('id', id);
@@ -130,7 +132,7 @@ function favoritomapaJS(id) {
                 mapMarkers = [];
             }
             for (let i = 0; i < respuesta.length; i++) {
-                popups(respuesta[i].direccion_loc, respuesta[i].nom_loc)
+                popups(respuesta[i].direccion_loc, respuesta[i].nom_loc, respuesta[i].foto_loc, respuesta[i].descripcion_loc, respuesta[i].icono_loc, respuesta[i].tipo_loc,id)
 
             }
         }
@@ -138,7 +140,7 @@ function favoritomapaJS(id) {
     ajax.send(formData)
 }
 
-function popups(direccion, nombre) {
+function popups(direccion, nombre, foto_loc, descripcion_loc, icono_loc, tipo_loc,id_usu) {
 
     L.esri.Geocoding.geocode({
         apikey: 'AAPKbfa578cdbb364f19acd6f66898f69789JE8ubfzUeNcE_1-_m2wPRTzApVhYnHEmSOkCXQ-8Yn3wxhHQkRRyP69j7CkXt-ev'
@@ -152,6 +154,7 @@ function popups(direccion, nombre) {
         mapMarkers.push(marker)
         marker._icon.classList.add("huechange");
         marker.on('click', function(event) {
+            mostrarinfo(direccion, nombre, foto_loc, descripcion_loc,id_usu);
             console.log(this);
             if (Object.keys(routingControl).length != 0) {
                 map.removeControl(routingControl);
@@ -166,7 +169,7 @@ function popups(direccion, nombre) {
                 language: 'es',
                 show: false
             }).addTo(map);
-            map.setView([lat, lon], 15);
+            //map.setView([lat, lon], 15);
         });
     });
 }
@@ -237,3 +240,73 @@ function onMapClick(e) {
     });
     map.addLayer(markerdrag);
 };
+//muestra la informacion debajo del mapa
+function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
+    var idt = document.getElementById('usuarioID').value
+    var formData = new FormData();
+    formData.append('_token', document.getElementById('token').getAttribute("content"));
+    formData.append('id_usu',idt);
+    formData.append('nombre',nombre);
+    formData.append('direccion',direccion);
+    var ajax = objetoAjax();
+    ajax.open("POST", "comprobarfav", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            var info = document.getElementById("info");
+            var respuesta = JSON.parse(this.responseText);
+            console.log(respuesta.length)
+            var num=respuesta.length
+            if(num==1){
+                var recarga = '';
+                recarga += '<p>' + nombre + '</p>';
+                recarga += '<p>' + foto_loc + '</p>';
+                recarga += '<p>' + descripcion_loc + '</p>';
+                recarga += '<p>' + direccion + '</p>';
+                recarga += '<button onclick="añadirfav(idt,nombre,direccion,foto_loc, descripcion_loc); return false;">Quitar favorito</button>';
+            }else{
+                var recarga = '';
+                recarga += '<p>' + nombre + '</p>';
+                recarga += '<p>' + foto_loc + '</p>';
+                recarga += '<p>' + descripcion_loc + '</p>';
+                recarga += '<p>' + direccion + '</p>';
+                recarga += '<button onclick="borrarfav(idt,nombre,direccion,foto_loc, descripcion_loc); return false;">Añadir favorito</button>';
+            }
+        }
+        info.innerHTML = recarga;
+    }
+    ajax.send(formData)
+}
+
+function añadirfav(id,nombre,direccion,foto_loc, descripcion_loc){
+    var formData = new FormData();
+    formData.append('_token', document.getElementById('token').getAttribute("content"));
+    formData.append('id_usu',id);
+    formData.append('nombre',nombre);
+    var ajax = objetoAjax();
+    ajax.open("POST", "añadirfav", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            var respuesta = JSON.parse(this.responseText);
+            console.log(respuesta)
+            mostrarinfo(direccion, nombre, foto_loc, descripcion_loc)
+        }
+    }
+    ajax.send(formData)
+}
+
+function borrarfav(id,nombre){
+    var formData = new FormData();
+    formData.append('_token', document.getElementById('token').getAttribute("content"));
+    formData.append('id_usu',id);
+    formData.append('nombre',nombre);
+    var ajax = objetoAjax();
+    ajax.open("POST", "", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            var respuesta = JSON.parse(this.responseText);
+
+        }
+        info.innerHTML = recarga;
+    }
+    ajax.send(formData)
+}
