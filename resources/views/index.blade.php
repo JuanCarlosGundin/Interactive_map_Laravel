@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{!! asset('css/styles.css') !!}">
     <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
     <title>Sitios</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <!-- Load Leaflet from CDN -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
@@ -22,14 +24,71 @@
 </head>
 
 <body>
-    <input type="checkbox" id="Monumento" value="Monumento" onclick="mostrarmapaJS()" >Monumentos
-    <input type="checkbox" id="Museos" value="Museo" onclick="mostrarmapaJS()" >Museos
-    <input type="checkbox" id="Restaurantes" value="Restaurante" onclick="mostrarmapaJS()" >Restaurantes
-    <input type="checkbox" id="Metro" value="Metro" onclick="mostrarmapaJS()" >Metros
-    <input type="checkbox" id="Hotel" value="Hotel" onclick="mostrarmapaJS()" >Hoteles
-    <input type="checkbox" id="Mercado" value="Mercado" onclick="mostrarmapaJS()" >Mercados
-    <button onclick="centrarJS()">Centrar</button>
-    <br>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Mapa</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Cerrar</a>
+              </li>
+              <li class="nav-item">
+                <button type="button" class="btn btn-light" onclick="centrarJS()">Centrar</button>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Dropdown
+                </a>
+                <ul class="dropdown-menu p-1" aria-labelledby="navbarDropdown">
+                  <li><div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Monumento" id="Monumento" onclick="mostrarmapaJS()">
+                    <label class="form-check-label" for="Monumento">
+                        Monumentos
+                    </label>
+                  </div></li>
+                  <li><div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Museo" id="Museos" onclick="mostrarmapaJS()">
+                    <label class="form-check-label" for="Museos">
+                        Museos
+                    </label>
+                  </div></li>
+                  <li><div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Restaurante" id="Restaurantes" onclick="mostrarmapaJS()">
+                    <label class="form-check-label" for="Restaurantes">
+                        Restaurantes
+                    </label>
+                  </div></li>
+                  <li><div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Metro" id="Metro" onclick="mostrarmapaJS()">
+                    <label class="form-check-label" for="Metro">
+                        Metros
+                    </label>
+                  </div></li>
+                  <li><div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Hotel" id="Hotel" onclick="mostrarmapaJS()">
+                    <label class="form-check-label" for="Hotel">
+                        Hoteles
+                    </label>
+                  </div></li>
+                  <li><div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="Mercado" id="Mercado" onclick="mostrarmapaJS()">
+                    <label class="form-check-label" for="Mercado">
+                        Mercados
+                    </label>
+                  </div></li>
+                </ul>
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
 
     <div id="map"></div>
     <br>
