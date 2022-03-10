@@ -1,8 +1,11 @@
 window.onload = function() {
     lat = 0;
     lon = 0;
+    //ruta de mapa
     routingControl = {};
+    //array de markers
     mapMarkers = [];
+    //marker de ubicacion
     markerdrag = {};
 
     getLocation()
@@ -88,6 +91,7 @@ function mostrarmapaJS() {
         if (ajax.readyState == 4 && ajax.status == 200) {
             var respuesta = JSON.parse(this.responseText);
             if (mapMarkers.length != 0) {
+                //siempre que se recargue el mapa, que se eliminen los markers anteriores
                 for (let z = 0; z < mapMarkers.length; z++) {
                     map.removeLayer(mapMarkers[z]);
                 }
@@ -122,17 +126,21 @@ function popups(direccion, nombre, foto_loc, nombre_icono, tipo_loc, descripcion
             marker.bindPopup(`<p>${nombre}</p>`).openPopup();
         }
         marker.addTo(map)
+            //meter el marker al grupo de markers
         mapMarkers.push(marker)
+            //cambia el color del marker
         marker._icon.classList.add("huechange");
         marker.on('click', function(event) {
             var info = document.getElementById("info");
             info.innerHTML = `<p>${nombre}</p>`
                 /* mostrarmapaJS(direccion, nombre, foto_loc, tipo_loc, descripcion_loc); */
+                //si una ruta ya se muestra, que se quite
             if (Object.keys(routingControl).length != 0) {
                 map.removeControl(routingControl);
             }
             var marker = event.target;
             var position = marker.getLatLng();
+            //crea la ruta desde la ubicacion de la persona al destino
             routingControl = L.Routing.control({
                 waypoints: [
                     L.latLng(lat, lon),
@@ -160,7 +168,7 @@ function area() {
         [41.386025, 2.164075],
         [41.378733, 2.163077]
     ];
-
+    //crea un perimetro azul donde esta la ubicacion de la actividad
     var polygon = L.polygon(latlngs, { fillOpacity: '0' }).addTo(map);
 }
 
@@ -181,6 +189,7 @@ function showPosition(position) {
 map.on('click', onMapClick);
 
 function onMapClick(e) {
+    //quita el marker de la ubicacion
     if (Object.keys(markerdrag).length != 0) {
         map.removeLayer(markerdrag);
     }
