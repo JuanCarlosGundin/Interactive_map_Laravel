@@ -94,15 +94,14 @@ function mostrarmapaJS() {
                 mapMarkers = [];
             }
             for (let i = 0; i < respuesta.length; i++) {
-                popups(respuesta[i].direccion_loc, respuesta[i].nom_loc, respuesta[i].foto_loc, respuesta[i].icono_loc, respuesta[i].tipo_loc, respuesta[i].descripcion_loc)
+                popups(respuesta[i].direccion_loc, respuesta[i].nom_loc, respuesta[i].foto_loc, respuesta[i].nombre_icono, respuesta[i].tipo_loc, respuesta[i].descripcion_loc)
             }
         }
     }
     ajax.send(formData)
 }
 
-function popups(direccion, nombre, foto_loc, icono_loc, tipo_loc, descripcion_loc) {
-    console.log(tipo_loc);
+function popups(direccion, nombre, foto_loc, nombre_icono, tipo_loc, descripcion_loc) {
     L.esri.Geocoding.geocode({
         apikey: 'AAPKbfa578cdbb364f19acd6f66898f69789JE8ubfzUeNcE_1-_m2wPRTzApVhYnHEmSOkCXQ-8Yn3wxhHQkRRyP69j7CkXt-ev'
     }).text(direccion).run(function(err, results, response) {
@@ -110,49 +109,12 @@ function popups(direccion, nombre, foto_loc, icono_loc, tipo_loc, descripcion_lo
             console.log(err);
             return;
         }
-        if (tipo_loc == 'Hotel') {
-            var icono = L.icon({
-                iconUrl: 'http://localhost/laravel/Proyecto4_mapas/storage/app/public/icono/hotel.png',
-                iconSize: [40, 40],
-                iconAnchor: [20, 20],
-                popupAnchor: [0, -20]
-            });
-        } else if (tipo_loc == 'Metro') {
-            var icono = L.icon({
-                iconUrl: 'http://localhost/laravel/Proyecto4_mapas/storage/app/public/icono/metro.png',
-                iconSize: [40, 40],
-                iconAnchor: [20, 20],
-                popupAnchor: [0, -20]
-            });
-        } else if (tipo_loc == 'Restaurante') {
-            var icono = L.icon({
-                iconUrl: 'http://localhost/laravel/Proyecto4_mapas/storage/app/public/icono/restaurante.png',
-                iconSize: [40, 40],
-                iconAnchor: [20, 20],
-                popupAnchor: [0, -20]
-            });
-        } else if (tipo_loc == 'Mercado') {
-            var icono = L.icon({
-                iconUrl: 'http://localhost/laravel/Proyecto4_mapas/storage/app/public/icono/mercado.png',
-                iconSize: [40, 40],
-                iconAnchor: [20, 20],
-                popupAnchor: [0, -20]
-            });
-        } else if (tipo_loc == 'Monumento') {
-            var icono = L.icon({
-                iconUrl: 'http://localhost/laravel/Proyecto4_mapas/storage/app/public/icono/monumento.png',
-                iconSize: [40, 40],
-                iconAnchor: [20, 20],
-                popupAnchor: [0, -20]
-            });
-        } else if (tipo_loc == 'Museo') {
-            var icono = L.icon({
-                iconUrl: 'http://localhost/laravel/Proyecto4_mapas/storage/app/public/icono/museo.png',
-                iconSize: [40, 40],
-                iconAnchor: [20, 20],
-                popupAnchor: [0, -20]
-            });
-        }
+        var icono = L.icon({
+            iconUrl: 'http://localhost/laravel/Proyecto4_mapas/storage/app/public/' + nombre_icono,
+            iconSize: [40, 40],
+            iconAnchor: [20, 20],
+            popupAnchor: [0, -20]
+        });
         var marker = L.marker(results.results[0].latlng, { icon: icono });
         if (foto_loc != null) {
             marker.bindPopup(`<p>${nombre}</p><img class="imagen" src='http://localhost/laravel/Proyecto4_mapas/storage/app/public/${foto_loc}'><p>${descripcion_loc}</p><p>${direccion}</p><button></button>`).openPopup();

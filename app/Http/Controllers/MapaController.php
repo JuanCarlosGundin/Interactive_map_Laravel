@@ -21,7 +21,7 @@ class MapaController extends Controller
         $Metro = $request->input('Metro');
         $Hotel = $request->input('Hotel');
         $Mercado = $request->input('Mercado');
-        $datos=DB::select('select * from tbl_localizaciones where tipo_loc like ? or tipo_loc like ? or tipo_loc like ? or tipo_loc like ? or tipo_loc like ? or tipo_loc like ?',[$Monumento,$Museo,$Restaurante,$Metro,$Hotel,$Mercado]);
+        $datos=DB::select('select * from tbl_localizaciones INNER JOIN tbl_icono on tbl_localizaciones.id_icono=tbl_icono.id where tipo_loc like ? or tipo_loc like ? or tipo_loc like ? or tipo_loc like ? or tipo_loc like ? or tipo_loc like ?',[$Monumento,$Museo,$Restaurante,$Metro,$Hotel,$Mercado]);
         return response()->json($datos);
     }
 
