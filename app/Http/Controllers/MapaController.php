@@ -43,13 +43,8 @@ class MapaController extends Controller
         }else{
             $datos['foto_loc'] = NULL;
         }
-        if($req->hasFile('icono_loc')){
-            $datos['icono_loc'] = $req->file('icono_loc')->store('icono','public');
-        }else{
-            $datos['icono_loc'] = NULL;
-        }
         try{
-            DB::table('tbl_localizaciones')->insert(["nom_loc"=>$datos['nom_loc'],"direccion_loc"=>$datos['direccion_loc'],"foto_loc"=>$datos['foto_loc'],"icono_loc"=>$datos['icono_loc'],"descripcion_loc"=>$datos['descripcion_loc'],"tipo_loc"=>$datos['tipo_loc']]);
+            DB::table('tbl_localizaciones')->insert(["nom_loc"=>$datos['nom_loc'],"direccion_loc"=>$datos['direccion_loc'],"foto_loc"=>$datos['foto_loc'],"descripcion_loc"=>$datos['descripcion_loc'],"tipo_loc"=>$datos['tipo_loc']]);
             return response()->json(array('resultado'=> 'OK'));
         }catch (\Throwable $th) {
             return response()->json(array('resultado'=> 'NOK: '.$th->getMessage()));
@@ -68,19 +63,9 @@ class MapaController extends Controller
             $foto = DB::table('tbl_localizaciones')->select('foto_loc')->where('id','=',$id)->first();
             $datos['foto_loc'] = $foto->foto_loc;
         }
-        if ($req->hasFile('icono_loc')) {
-            $icono = DB::table('tbl_localizaciones')->select('icono_loc')->where('id','=',$id)->first();
-            if ($icono->icono_loc != null) {
-                Storage::delete('public/'.$icono->icono_loc);
-            }
-            $datos['icono_loc'] = $req->file('icono_loc')->store('icono','public');
-        }else{
-            $icono = DB::table('tbl_localizaciones')->select('icono_loc')->where('id','=',$id)->first();
-            $datos['icono_loc'] = $icono->icono_loc;
-        }
         try{
             DB::beginTransaction();
-            DB::table('tbl_localizaciones')->where('id','=',$id)->update(["nom_loc"=>$datos['nom_loc'],"direccion_loc"=>$datos['direccion_loc'],"foto_loc"=>$datos['foto_loc'],"icono_loc"=>$datos['icono_loc'],"descripcion_loc"=>$datos['descripcion_loc'],"tipo_loc"=>$datos['tipo_loc']]);
+            DB::table('tbl_localizaciones')->where('id','=',$id)->update(["nom_loc"=>$datos['nom_loc'],"direccion_loc"=>$datos['direccion_loc'],"foto_loc"=>$datos['foto_loc'],"descripcion_loc"=>$datos['descripcion_loc'],"tipo_loc"=>$datos['tipo_loc']]);
             DB::commit();
             return response()->json(array('resultado'=> 'OK'));
         }catch (\Throwable $th) {
@@ -95,10 +80,6 @@ class MapaController extends Controller
             $foto = DB::table('tbl_localizaciones')->select('foto_loc')->where('id','=',$id)->first();
             if ($foto->foto_loc != null) {
                 Storage::delete('public/'.$foto->foto_loc);
-            }
-            $icono = DB::table('tbl_localizaciones')->select('icono_loc')->where('id','=',$id)->first();
-            if ($icono->icono_loc != null) {
-                Storage::delete('public/'.$icono->icono_loc);
             }
             DB::table('tbl_localizaciones')->where('id','=',$id)->delete();
             DB::commit();

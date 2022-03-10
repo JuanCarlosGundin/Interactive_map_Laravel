@@ -25,10 +25,6 @@
         <input type="file" class="form-control" id="foto_loc" name="foto_loc">
         </div>
         <div class="form-group">
-        <label class="col-sm-2 col-form-label">Icono:</label>
-        <input type="file" class="form-control" id="icono_loc" name="icono_loc">
-        </div>
-        <div class="form-group">
         <label class="col-sm-2 col-form-label">Descripcion:</label>
         <input type="text" class="form-control" id="descripcion_loc" name="descripcion_loc" placeholder="Introduce una descripcion" value="{{old('descripcion_loc')}}"><br>
         </div>
