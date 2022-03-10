@@ -34,7 +34,7 @@ var map = L.map('map');
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
-map.setView([41.3533441, 2.1122431], 12);
+map.setView([41.3533441, 2.1122431], 13);
 
 function mostrarmapaJS() {
 
@@ -222,3 +222,7 @@ function onMapClick(e) {
     });
     map.addLayer(markerdrag);
 };
+
+function centrarJS() {
+    map.setView([lat, lon], 13);
+}

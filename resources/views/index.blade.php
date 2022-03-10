@@ -28,6 +28,7 @@
     <input type="checkbox" id="Metro" value="Metro" onclick="mostrarmapaJS()" >Metros
     <input type="checkbox" id="Hotel" value="Hotel" onclick="mostrarmapaJS()" >Hoteles
     <input type="checkbox" id="Mercado" value="Mercado" onclick="mostrarmapaJS()" >Mercados
+    <button onclick="centrarJS()">Centrar</button>
     <br>
 
     <div id="map"></div>
