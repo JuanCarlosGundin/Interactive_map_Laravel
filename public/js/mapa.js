@@ -225,32 +225,80 @@ function onMapClick(e) {
 
 //Formulario gincana
 function formgincana() {
-    var token = document.getElementById('token').getAttribute("content");
+    var info = document.getElementById("info");
+    var recarga = '';
+    recarga += '<div class="formgincana">';
+    recarga += '<form method="GET">';
+    recarga += '<h1>Gincana</h1> ';
+    recarga += '<input class="input-gincana" type="text" name="nom_sala" id="nom_sala" placeholder="Nombre Sala">';
+    recarga += '<input class="input-gincana" type="text" name="contra_sala" id="contra_sala" placeholder="Codigo Sala">';
+    recarga += '<center>';
+    recarga += '<input class="botton-gincana" type="submit" name="boton" value="Crear" onclick="gincanaGET(`crear`); return false;">';
+    recarga += '<input class="botton-gincana" type="submit" name="boton" value="Unirse" onclick="gincanaGET(`unirse`); return false;">';
+    recarga += '<div id=mensaje></div>';
+    recarga += '</center>';
+    recarga += '</form>';
+    recarga += '</div>';
+    info.innerHTML = recarga;
+}
 
+function gincanaGET(valor) {
+    var mensaje = document.getElementById('mensaje');
+    var token = document.getElementById('token').getAttribute("content");
+    var nom_sala = document.getElementById('nom_sala').value;
+    var contra_sala = document.getElementById('contra_sala').value;
+
+    var formData = new FormData();
+    formData.append('_token', token);
+    formData.append('_method', "POST");
+    formData.append('nom_sala', nom_sala);
+    formData.append('contra_sala', contra_sala);
+    formData.append('valor', valor);
+
+    var ajax = objetoAjax();
+
+    ajax.open("POST", "gincanaPOST", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            var respuesta = JSON.parse(this.responseText);
+            if (respuesta.resultado == "NOKunirse") {
+                mensaje.innerHTML = '<p>Esta sala no existe</p>';
+            } else if (respuesta.resultado == "NOKcrear") {
+                mensaje.innerHTML = '<p>El nombre de la sala ya existe</p>';
+            } else {
+                recargaSalaGin();
+            }
+        }
+    }
+    ajax.send(formData)
+
+}
+
+function recargaSalaGin() {
+    var token = document.getElementById('token').getAttribute("content");
+    var info = document.getElementById("info");
     var formData = new FormData();
     formData.append('_token', token);
     formData.append('_method', "POST");
 
     var ajax = objetoAjax();
 
-    ajax.open("POST", "gincana", true);
+    ajax.open("POST", "recargaSala", true);
     ajax.onreadystatechange = function() {
+        var recarga = '';
         if (ajax.readyState == 4 && ajax.status == 200) {
-            var info = document.getElementById("info");
-            var recarga = '';
-            recarga += '<div class="formgincana">';
-            recarga += '<form method="POST">';
-            recarga += '<h1>Gincana</h1> ';
-            recarga += '<input class="input-gincana" type="text" name="nom_sala" placeholder="Nombre Sala">';
-            recarga += '<input class="input-gincana" type="text" name="contra_sala" placeholder="Codigo Sala">';
-            recarga += '<div class="">'
-            recarga += '<input class="input-gincana" type="submit" value="Crear">';
-            recarga += '<input class="input-gincana" type="submit" value="Unirse">';
-            recarga += '</div>'
-            recarga += '</form>';
+            var respuesta = JSON.parse(this.responseText);
+            recarga += '<div>';
+            recarga += '<p>Jugadores:</p>';
+            for (let i = 0; i < respuesta.length; i++) {
+                recarga += '<p>' + respuesta[i].mail_usu + '</p>'
+            }
+            recarga += '<button onclick="recargaSalGin();">Refrescar'
             recarga += '</div>';
-            info.innerHTML = recarga;
+
         }
+        info.innerHTML = recarga;
     }
     ajax.send(formData)
+
 }
