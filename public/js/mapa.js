@@ -262,14 +262,14 @@ function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
                 recarga += '<p>' + foto_loc + '</p>';
                 recarga += '<p>' + descripcion_loc + '</p>';
                 recarga += '<p>' + direccion + '</p>';
-                recarga += '<button onclick="añadirfav(idt,nombre,direccion,foto_loc, descripcion_loc); return false;">Quitar favorito</button>';
+                recarga += '<button onclick="borrarfav(\''+idt+'\',\''+nombre+'\',\''+direccion+'\',\''+foto_loc+'\',\''+descripcion_loc+'\'); return false;">Quitar favorito</button>';
             }else{
                 var recarga = '';
                 recarga += '<p>' + nombre + '</p>';
                 recarga += '<p>' + foto_loc + '</p>';
                 recarga += '<p>' + descripcion_loc + '</p>';
                 recarga += '<p>' + direccion + '</p>';
-                recarga += '<button onclick="borrarfav(idt,nombre,direccion,foto_loc, descripcion_loc); return false;">Añadir favorito</button>';
+                recarga += '<button onclick="añadirfav(\''+idt+'\',\''+nombre+'\',\''+direccion+'\',\''+foto_loc+'\',\''+descripcion_loc+'\'); return false;">Añadir favorito</button>';
             }
         }
         info.innerHTML = recarga;
@@ -277,36 +277,36 @@ function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
     ajax.send(formData)
 }
 
-function añadirfav(id,nombre,direccion,foto_loc, descripcion_loc){
+function añadirfav(id,nombre,direccion,foto_loc,descripcion_loc){
     var formData = new FormData();
     formData.append('_token', document.getElementById('token').getAttribute("content"));
     formData.append('id_usu',id);
     formData.append('nombre',nombre);
     var ajax = objetoAjax();
-    ajax.open("POST", "añadirfav", true);
+    ajax.open("POST", "anadirfav", true);
     ajax.onreadystatechange = function() {
         if (ajax.readyState == 4 && ajax.status == 200) {
             var respuesta = JSON.parse(this.responseText);
             console.log(respuesta)
-            mostrarinfo(direccion, nombre, foto_loc, descripcion_loc)
+            mostrarinfo(direccion, nombre, foto_loc,descripcion_loc)
         }
     }
     ajax.send(formData)
 }
 
-function borrarfav(id,nombre){
+function borrarfav(id,nombre,direccion,foto_loc,descripcion_loc){
     var formData = new FormData();
     formData.append('_token', document.getElementById('token').getAttribute("content"));
     formData.append('id_usu',id);
     formData.append('nombre',nombre);
     var ajax = objetoAjax();
-    ajax.open("POST", "", true);
+    ajax.open("POST", "borrarfav", true);
     ajax.onreadystatechange = function() {
         if (ajax.readyState == 4 && ajax.status == 200) {
             var respuesta = JSON.parse(this.responseText);
-
+            console.log(respuesta)
+            mostrarinfo(direccion, nombre, foto_loc,descripcion_loc)
         }
-        info.innerHTML = recarga;
     }
     ajax.send(formData)
 }

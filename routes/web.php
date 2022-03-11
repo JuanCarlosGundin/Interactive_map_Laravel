@@ -27,7 +27,7 @@ Route::post('mostrarmapas',[MapaController::class,'mostrarmapas']);
 //mostrar markers favoritos 
 Route::post('mostrarfavorito',[MapaController::class,'mostrarfavorito']);
 Route::post('comprobarfav',[MapaController::class,'comprobarfav']);
-Route::post('añadirfav',[MapaController::class,'añadirfav']);
+Route::post('anadirfav',[MapaController::class,'anadirfav']);
 Route::post('borrarfav',[MapaController::class,'borrarfav']);
 
 //crud administrador
