@@ -12,19 +12,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../public/img/logo2.png" type="image/x-icon">
     <title>Formulario login</title>
 </head>
 <body>
     <div id="login-button" onclick="formlogin()">
-        <img src="https://dqcgrsy5v35b9.cloudfront.net/cruiseplanner/assets/img/icons/login-w-icon.png">
+        <img src="../public/img/logo.png">
     </div>
     <div class="fade-in" id="container">    
     <form action="{{url('loginPost')}}" method="POST">
         <h1>Log In</h1>  
         @csrf
         {{method_field('POST')}}
-        <input type="email" name="email" placeholder="E-mail">
-        <input type="password" name="pass" placeholder="Password">
+        <input type="email" name="mail_usu" placeholder="E-mail">
+        <input type="password" name="contra_usu" placeholder="Password">
         <input type="submit" value="Log in">
     </form>
     </div>

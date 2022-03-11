@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 //Login
 Route::get('/',[UsuarioController::class, 'login']);
 Route::post('loginPost',[UsuarioController::class,'loginPost']);
+Route::get('logout',[UsuarioController::class,'logout']);
 
 //Acceder a Vista Mapa
 Route::get('mapa',[MapaController::class,'mapa']);
@@ -39,3 +40,6 @@ Route::post('crear',[MapaController::class,'crear']);
 
 //actualizarJS
 Route::put('actualizar/{id}',[MapaController::class,'actualizar']);
+
+//Gincana
+Route::post('/gincana',[MapaController::class,'gincana']);

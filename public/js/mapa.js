@@ -36,10 +36,14 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 map.setView([41.3533441, 2.1122431], 13);
 
-function mostrarmapaJS() {
+function mostrarmapaJS(id) {
 
     var formData = new FormData();
     formData.append('_token', document.getElementById('token').getAttribute("content"));
+    formData.append('id', id);
+    filtro = document.getElementById('etiqueta').value
+        //aqui comprobamos que la etiqueta está vacia o llena con información
+    if (filtro == "") { formData.append('etiqueta', 666) } else { formData.append('etiqueta', document.getElementById('etiqueta').value) }
     //ZONA DE FILTRADO
     //filtramos por monumento
     var Monumento = document.getElementById("Monumento");
@@ -98,14 +102,14 @@ function mostrarmapaJS() {
                 mapMarkers = [];
             }
             for (let i = 0; i < respuesta.length; i++) {
-                popups(respuesta[i].direccion_loc, respuesta[i].nom_loc, respuesta[i].foto_loc, respuesta[i].nombre_icono, respuesta[i].tipo_loc, respuesta[i].descripcion_loc)
+                popups(respuesta[i].direccion_loc, respuesta[i].nom_loc, respuesta[i].foto_loc, respuesta[i].descripcion_loc, respuesta[i].nombre_icono, respuesta[i].tipo_loc)
             }
         }
     }
     ajax.send(formData)
 }
 
-function popups(direccion, nombre, foto_loc, nombre_icono, tipo_loc, descripcion_loc) {
+function popups(direccion, nombre, foto_loc, descripcion_loc, nombre_icono, tipo_loc) {
     L.esri.Geocoding.geocode({
         apikey: 'AAPKbfa578cdbb364f19acd6f66898f69789JE8ubfzUeNcE_1-_m2wPRTzApVhYnHEmSOkCXQ-8Yn3wxhHQkRRyP69j7CkXt-ev'
     }).text(direccion).run(function(err, results, response) {
@@ -131,10 +135,9 @@ function popups(direccion, nombre, foto_loc, nombre_icono, tipo_loc, descripcion
             //cambia el color del marker
         marker._icon.classList.add("huechange");
         marker.on('click', function(event) {
-            var info = document.getElementById("info");
-            info.innerHTML = `<p>${nombre}</p>`
-                /* mostrarmapaJS(direccion, nombre, foto_loc, tipo_loc, descripcion_loc); */
-                //si una ruta ya se muestra, que se quite
+            mostrardiv();
+            mostrarinfo(direccion, nombre, foto_loc, descripcion_loc);
+            console.log(this);
             if (Object.keys(routingControl).length != 0) {
                 map.removeControl(routingControl);
             }
@@ -153,10 +156,20 @@ function popups(direccion, nombre, foto_loc, nombre_icono, tipo_loc, descripcion
     });
 }
 
-/* function mostrarmapaJS(direccion, nombre, foto_loc, tipo_loc, descripcion_loc) {
+function mostrardiv() {
+    window.scrollTo(0, 500);
+}
+
+function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
     var info = document.getElementById("info");
-    info.innerHTML = `<p>${nombre}</p>`
-} */
+    var recarga = '';
+    recarga += '<p class="parrafo">Nombre: ' + nombre + '</p>';
+    recarga += '<p>' + foto_loc + '</p>';
+    recarga += '<p>Descricpion: ' + descripcion_loc + '</p>';
+    recarga += '<p>Direccion: ' + direccion + '</p>';
+    info.innerHTML = recarga;
+
+}
 
 function area() {
     var latlngs = [
@@ -225,4 +238,36 @@ function onMapClick(e) {
 
 function centrarJS() {
     map.setView([lat, lon], 13);
+}
+
+//Formulario gincana
+function formgincana() {
+    var token = document.getElementById('token').getAttribute("content");
+
+    var formData = new FormData();
+    formData.append('_token', token);
+    formData.append('_method', "POST");
+
+    var ajax = objetoAjax();
+
+    ajax.open("POST", "gincana", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            var info = document.getElementById("info");
+            var recarga = '';
+            recarga += '<div class="formgincana">';
+            recarga += '<form method="POST">';
+            recarga += '<h1>Gincana</h1> ';
+            recarga += '<input class="input-gincana" type="text" name="nom_sala" placeholder="Nombre Sala">';
+            recarga += '<input class="input-gincana" type="text" name="contra_sala" placeholder="Codigo Sala">';
+            recarga += '<div class="">'
+            recarga += '<input class="input-gincana" type="submit" value="Crear">';
+            recarga += '<input class="input-gincana" type="submit" value="Unirse">';
+            recarga += '</div>'
+            recarga += '</form>';
+            recarga += '</div>';
+            info.innerHTML = recarga;
+        }
+    }
+    ajax.send(formData)
 }

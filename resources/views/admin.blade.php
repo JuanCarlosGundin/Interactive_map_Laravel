@@ -1,3 +1,9 @@
+@if(!Session::get('mail_admin'))
+    <?php
+        //Si la session no esta definida te redirige al login.
+        return redirect()->to('/')->send();
+    ?>
+@endif
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +13,14 @@
     <meta name="csrf-token" id="token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="../public/css/modal.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="../public/css/index.css">
+    <link rel="shortcut icon" href="../public/img/logo2.png" type="image/x-icon">    
     <title>Administracion</title>
 </head>
 <body class="m-5">
+    <form action='{{url('logout')}}' method='get'>
+        <button class='btn' type='submit' ><i class='fas fa-user'></i>  Cerrar sesión</button>
+    </form>
     <form method="POST" onsubmit="crearJS(); return false;" id="formcrear" enctype="multipart/form-data">
         <div class="form-group">
         <label class="col-sm-2 col-form-label">Nombre:</label>
@@ -53,7 +64,7 @@
         </div>
     </div>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    {{-- <script src="js/validarcrud.js"></script> --}}
+    <script src="js/validarcrud.js"></script>
     <script src="js/crud.js"></script>
 </body>
 </html>
