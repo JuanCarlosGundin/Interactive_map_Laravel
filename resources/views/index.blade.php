@@ -33,13 +33,13 @@
         <div class="index-div1">
             <input type="text" id="etiqueta" onkeyup="mostrarmapaJS(<?php echo $id; ?>); return false;">
             <br>    
-            <input type="checkbox" id="Monumento" value="Monumento" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Monumentos
-            <input type="checkbox" id="Museos" value="Museo" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Museos
-            <input type="checkbox" id="Restaurantes" value="Restaurante" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Restaurantes
+            <input type="checkbox" id="Monumento" value="Monumento" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked><span class="input-index">Monumentos</span>
+            <input type="checkbox" id="Museos" value="Museo" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked><span class="input-index">Museos</span>
+            <input type="checkbox" id="Restaurantes" value="Restaurante" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked><span class="input-index">Restaurantes</span>
             <br>
-            <input type="checkbox" id="Metro" value="Metro" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Metros
-            <input type="checkbox" id="Hotel" value="Hotel" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Hoteles
-            <input type="checkbox" id="Mercado" value="Mercado" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>Mercados
+            <input type="checkbox" id="Metro" value="Metro" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked><span class="input-index">Metros</span>
+            <input type="checkbox" id="Hotel" value="Hotel" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked><span class="input-index">Hoteles</span>
+            <input type="checkbox" id="Mercado" value="Mercado" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked><span class="input-index">Mercados</span>
             <br>
             <button onclick="mostrarmapaJS(<?php echo $id; ?>); return false;">FAVORITOS</button>
         </div>
@@ -47,17 +47,18 @@
             <form action='{{url('logout')}}' method='get'>
                 <button class="bt-logout"><img src="../public/img/logout.png" class="logoutic"></button>
             </form>
+            <button class="bt-logout" onclick="formgincana()"><img src="../public/img/gincana.png" class="logoutic"></button>
         </div>
     </div>
         <!-- onclick="getLocation();" -->
         <div class="map" id="map">
-
+            
         </div>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.0/esri-leaflet-geocoder.css">
         <script src="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.0/esri-leaflet-geocoder.js"></script>
         <script src="js/mapa.js"></script>
-        <div id="info">
-            
+        <div id="info" class="info">
+
         </div>
 </body>
 

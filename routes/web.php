@@ -40,3 +40,6 @@ Route::post('crear',[MapaController::class,'crear']);
 
 //actualizarJS
 Route::put('actualizar/{id}',[MapaController::class,'actualizar']);
+
+//Gincana
+Route::post('/gincana',[MapaController::class,'gincana']);

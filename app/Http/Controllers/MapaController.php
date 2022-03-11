@@ -84,5 +84,10 @@ class MapaController extends Controller
             return $e->getMessage();
         }
     }
-    //hola
+    //Consulta tabla salas
+    public function gincana(Request $req){
+        $datos = DB::table('tbl_sala')->where('nom_sala','=',$req['nom_sala'])->get();
+        return $datos;
+        return response()->json($datos);
+    }
 }

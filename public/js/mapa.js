@@ -120,6 +120,7 @@ function popups(direccion, nombre, foto_loc, descripcion_loc, icono_loc, tipo_lo
         mapMarkers.push(marker)
         marker._icon.classList.add("huechange");
         marker.on('click', function(event) {
+            mostrardiv();
             mostrarinfo(direccion, nombre, foto_loc, descripcion_loc);
             console.log(this);
             if (Object.keys(routingControl).length != 0) {
@@ -135,18 +136,22 @@ function popups(direccion, nombre, foto_loc, descripcion_loc, icono_loc, tipo_lo
                 language: 'es',
                 show: false
             }).addTo(map);
-            map.setView([lat, lon], 15);
+            //map.setView([lat, lon], 15);
         });
     });
+}
+
+function mostrardiv() {
+    window.scrollTo(0, 500);
 }
 
 function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
     var info = document.getElementById("info");
     var recarga = '';
-    recarga += '<p>' + nombre + '</p>';
+    recarga += '<p class="parrafo">Nombre: ' + nombre + '</p>';
     recarga += '<p>' + foto_loc + '</p>';
-    recarga += '<p>' + descripcion_loc + '</p>';
-    recarga += '<p>' + direccion + '</p>';
+    recarga += '<p>Descricpion: ' + descripcion_loc + '</p>';
+    recarga += '<p>Direccion: ' + direccion + '</p>';
     info.innerHTML = recarga;
 
 }
@@ -217,3 +222,35 @@ function onMapClick(e) {
     });
     map.addLayer(markerdrag);
 };
+
+//Formulario gincana
+function formgincana() {
+    var token = document.getElementById('token').getAttribute("content");
+
+    var formData = new FormData();
+    formData.append('_token', token);
+    formData.append('_method', "POST");
+
+    var ajax = objetoAjax();
+
+    ajax.open("POST", "gincana", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            var info = document.getElementById("info");
+            var recarga = '';
+            recarga += '<div class="formgincana">';
+            recarga += '<form method="POST">';
+            recarga += '<h1>Gincana</h1> ';
+            recarga += '<input class="input-gincana" type="text" name="nom_sala" placeholder="Nombre Sala">';
+            recarga += '<input class="input-gincana" type="text" name="contra_sala" placeholder="Codigo Sala">';
+            recarga += '<div class="">'
+            recarga += '<input class="input-gincana" type="submit" value="Crear">';
+            recarga += '<input class="input-gincana" type="submit" value="Unirse">';
+            recarga += '</div>'
+            recarga += '</form>';
+            recarga += '</div>';
+            info.innerHTML = recarga;
+        }
+    }
+    ajax.send(formData)
+}
