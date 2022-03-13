@@ -39,6 +39,7 @@
           <br>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <form class="d-flex">
+              <input type="hidden" id="usuarioID" value='<?php echo $id; ?>'>
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="etiqueta" onkeyup="mostrarmapaJS(<?php echo $id; ?>); return false;">
               <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
@@ -53,6 +54,9 @@
               </li>
               <li class="nav-item">
                 <button type="button" class="btn btn-light" onclick="centrarJS()">Centrar</button>
+              </li>
+              <li class="nav-item">
+                <button type="button" class="btn btn-light" onclick="favoritomapaJS(<?php echo $id; ?>); return false;">FAVORITOS</button>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
