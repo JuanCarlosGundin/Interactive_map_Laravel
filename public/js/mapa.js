@@ -171,6 +171,7 @@ function mostrardiv() {
 
 //muestra la informacion debajo del mapa
 function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
+    var info = document.getElementById("info");
     var idt = document.getElementById('usuarioID').value
     var formData = new FormData();
     formData.append('_token', document.getElementById('token').getAttribute("content"));
@@ -181,21 +182,28 @@ function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
     ajax.open("POST", "comprobarfav", true);
     ajax.onreadystatechange = function() {
         if (ajax.readyState == 4 && ajax.status == 200) {
-            var info = document.getElementById("info");
             var respuesta = JSON.parse(this.responseText);
             console.log(respuesta.length)
             var num = respuesta.length
             if (num == 1) {
                 var recarga = '';
                 recarga += '<p>' + nombre + '</p>';
-                recarga += '<p>' + foto_loc + '</p>';
+                if (foto_loc != null) {
+                    recarga += '<p><img class="imagen" src="http://localhost/laravel/Proyecto4_mapas/storage/app/public/' + foto_loc + '"></p>';
+                } else {
+                    recarga += '<p>Imagen no disponible</p>';
+                }
                 recarga += '<p>' + descripcion_loc + '</p>';
                 recarga += '<p>' + direccion + '</p>';
                 recarga += '<button onclick="borrarfav(\'' + idt + '\',\'' + nombre + '\',\'' + direccion + '\',\'' + foto_loc + '\',\'' + descripcion_loc + '\'); return false;">Quitar favorito</button>';
             } else {
                 var recarga = '';
                 recarga += '<p>' + nombre + '</p>';
-                recarga += '<p>' + foto_loc + '</p>';
+                if (foto_loc != null) {
+                    recarga += '<p><img class="imagen" src="http://localhost/laravel/Proyecto4_mapas/storage/app/public/' + foto_loc + '"></p>';
+                } else {
+                    recarga += '<p>Imagen no disponible</p>';
+                }
                 recarga += '<p>' + descripcion_loc + '</p>';
                 recarga += '<p>' + direccion + '</p>';
                 recarga += '<button onclick="añadirfav(\'' + idt + '\',\'' + nombre + '\',\'' + direccion + '\',\'' + foto_loc + '\',\'' + descripcion_loc + '\'); return false;">Añadir favorito</button>';
@@ -328,7 +336,7 @@ function favoritomapaJS(id) {
                 mapMarkers = [];
             }
             for (let i = 0; i < respuesta.length; i++) {
-                popups(respuesta[i].direccion_loc, respuesta[i].nom_loc, respuesta[i].foto_loc, respuesta[i].descripcion_loc, respuesta[i].icono_loc, respuesta[i].tipo_loc, id)
+                popups(respuesta[i].direccion_loc, respuesta[i].nom_loc, respuesta[i].foto_loc, respuesta[i].descripcion_loc, respuesta[i].nombre_icono, respuesta[i].tipo_loc, id)
 
             }
         }

@@ -50,6 +50,7 @@ class MapaController extends Controller
         $datos=DB::select('select * from tbl_favoritos
         INNER JOIN tbl_localizaciones ON tbl_favoritos.id_localizacion = tbl_localizaciones.id 
         INNER JOIN tbl_users ON tbl_favoritos.id_user = tbl_users.id 
+        INNER JOIN tbl_icono on tbl_localizaciones.id_icono=tbl_icono.id 
         where 
         tbl_favoritos.id_user = ?'
         ,[$id]);
