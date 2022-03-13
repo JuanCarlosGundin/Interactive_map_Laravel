@@ -43,7 +43,11 @@ function mostrarmapaJS(id) {
     formData.append('id', id);
     filtro = document.getElementById('etiqueta').value
         //aqui comprobamos que la etiqueta está vacia o llena con información
-    if (filtro == "") { formData.append('etiqueta', 666) } else { formData.append('etiqueta', document.getElementById('etiqueta').value) }
+    if (filtro == "") {
+        formData.append('etiqueta', 666)
+    } else {
+        formData.append('etiqueta', document.getElementById('etiqueta').value)
+    }
     //ZONA DE FILTRADO
     //filtramos por monumento
     var Monumento = document.getElementById("Monumento");
