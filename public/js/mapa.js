@@ -279,89 +279,6 @@ function onMapClick(e) {
     map.addLayer(markerdrag);
 };
 
-function centrarJS() {
-    map.setView([lat, lon], 13);
-}
-
-//Formulario gincana
-function formgincana() {
-    var info = document.getElementById("info");
-    var recarga = '';
-    recarga += '<div class="formgincana">';
-    recarga += '<form method="GET">';
-    recarga += '<h1>Gincana</h1> ';
-    recarga += '<input class="input-gincana" type="text" name="nom_sala" id="nom_sala" placeholder="Nombre Sala">';
-    recarga += '<input class="input-gincana" type="text" name="contra_sala" id="contra_sala" placeholder="Codigo Sala">';
-    recarga += '<center>';
-    recarga += '<input class="botton-gincana" type="submit" name="boton" value="Crear" onclick="gincanaGET(`crear`); return false;">';
-    recarga += '<input class="botton-gincana" type="submit" name="boton" value="Unirse" onclick="gincanaGET(`unirse`); return false;">';
-    recarga += '<div id=mensaje></div>';
-    recarga += '</center>';
-    recarga += '</form>';
-    recarga += '</div>';
-    info.innerHTML = recarga;
-}
-
-function gincanaGET(valor) {
-    var mensaje = document.getElementById('mensaje');
-    var token = document.getElementById('token').getAttribute("content");
-    var nom_sala = document.getElementById('nom_sala').value;
-    var contra_sala = document.getElementById('contra_sala').value;
-
-    var formData = new FormData();
-    formData.append('_token', token);
-    formData.append('_method', "POST");
-    formData.append('nom_sala', nom_sala);
-    formData.append('contra_sala', contra_sala);
-    formData.append('valor', valor);
-
-    var ajax = objetoAjax();
-
-    ajax.open("POST", "gincanaPOST", true);
-    ajax.onreadystatechange = function() {
-        if (ajax.readyState == 4 && ajax.status == 200) {
-            var respuesta = JSON.parse(this.responseText);
-            if (respuesta.resultado == "NOKunirse") {
-                mensaje.innerHTML = '<p>Esta sala no existe</p>';
-            } else if (respuesta.resultado == "NOKcrear") {
-                mensaje.innerHTML = '<p>El nombre de la sala ya existe</p>';
-            } else {
-                recargaSalaGin();
-            }
-        }
-    }
-    ajax.send(formData)
-
-}
-
-function recargaSalaGin() {
-    var token = document.getElementById('token').getAttribute("content");
-    var info = document.getElementById("info");
-    var formData = new FormData();
-    formData.append('_token', token);
-    formData.append('_method', "POST");
-
-    var ajax = objetoAjax();
-
-    ajax.open("POST", "recargaSala", true);
-    ajax.onreadystatechange = function() {
-        var recarga = '';
-        if (ajax.readyState == 4 && ajax.status == 200) {
-            var respuesta = JSON.parse(this.responseText);
-            recarga += '<div>';
-            recarga += '<p>Jugadores:</p>';
-            for (let i = 0; i < respuesta.length; i++) {
-                recarga += '<p>' + respuesta[i].mail_usu + '</p>'
-            }
-            recarga += '<button onclick="recargaSalGin();">Refrescar'
-            recarga += '</div>';
-
-        }
-        info.innerHTML = recarga;
-    }
-    ajax.send(formData)
-}
-
 //Función que muestra los favoritos del usuario en cuestiónç
 function favoritomapaJS(id) {
     console.log(id)
@@ -423,3 +340,155 @@ function borrarfav(id, nombre, direccion, foto_loc, descripcion_loc) {
     }
     ajax.send(formData)
 }
+
+function centrarJS() {
+    map.setView([lat, lon], 13);
+}
+
+//Formulario gincana
+function formgincana() {
+    var info = document.getElementById("info");
+    var recarga = '';
+    recarga += '<div class="formgincana">';
+    recarga += '<form method="GET">';
+    recarga += '<h1>Gincana</h1> ';
+    recarga += '<input class="input-gincana" type="text" name="nom_sala" id="nom_sala" placeholder="Nombre Sala">';
+    recarga += '<input class="input-gincana" type="text" name="contra_sala" id="contra_sala" placeholder="Codigo Sala">';
+    recarga += '<center>';
+    recarga += '<input class="botton-gincana" type="submit" name="boton" value="Crear" onclick="gincanaGET(`crear`); return false;">';
+    recarga += '<input class="botton-gincana" type="submit" name="boton" value="Unirse" onclick="gincanaGET(`unirse`); return false;">';
+    recarga += '<div id=mensaje></div>';
+    recarga += '</center>';
+    recarga += '</form>';
+    recarga += '</div>';
+    info.innerHTML = recarga;
+}
+
+function gincanaGET(valor) {
+    var mensaje = document.getElementById('mensaje');
+    var token = document.getElementById('token').getAttribute("content");
+    var nom_sala = document.getElementById('nom_sala').value;
+    var contra_sala = document.getElementById('contra_sala').value;
+
+    var formData = new FormData();
+    formData.append('_token', token);
+    formData.append('_method', "POST");
+    formData.append('nom_sala', nom_sala);
+    formData.append('contra_sala', contra_sala);
+    formData.append('valor', valor);
+
+    var ajax = objetoAjax();
+
+    ajax.open("POST", "gincanaPOST", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            console.log(ajax.responseText);
+            var respuesta = JSON.parse(this.responseText);
+            if (respuesta.resultado == "NOKunirse") {
+                console.log(respuesta.datos)
+                mensaje.innerHTML = '<p>Esta sala no existe</p>';
+            } else if (respuesta.resultado == "NOKcrear") {
+                mensaje.innerHTML = '<p>El nombre de la sala ya existe</p>';
+            } else {
+                mensaje.innerHTML = '<p>Funciona</p>';
+                recargaSalaGin();
+            }
+        }
+    }
+    ajax.send(formData)
+
+}
+
+function recargaSalaGin() {
+    var token = document.getElementById('token').getAttribute("content");
+    var info = document.getElementById("info");
+    var formData = new FormData();
+    formData.append('_token', token);
+    formData.append('_method', "POST");
+
+    var ajax = objetoAjax();
+
+    ajax.open("POST", "recargaSala", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            var respuesta = JSON.parse(this.responseText);
+            var id_usu = respuesta.id_usu;
+            //console.log(id_usu);
+            var participante = JSON.parse(respuesta.elementos);
+            //console.log(participante);
+            //console.log(participante[0][0]);
+            var recarga = '';
+            if (participante[0][0].estado_sala == 0) {
+                recarga += '<div class="formgincana">';
+                recarga += '<h1>' + participante[0][0].nom_sala + '</h1> ';
+                for (let i = 0; i < participante.length; i++) {
+                    if (participante[i].length != 0) {
+                        recarga += '<p class="input-gincana">' + participante[i][0].mail_usu + '</p>';
+                    }
+                }
+                recarga += '<center>';
+                recarga += '<button class="botton-gincana" onclick="recargaSalaGin()">Refrescar</button>';
+                if (id_usu == participante[0][0].id_creador) {
+                    recarga += '<button class="botton-gincana" onclick="recargaSalaGin()">Empezar</button>';
+                }
+                recarga += '</center>';
+                recarga += '</div>';
+            } else {
+                //partida en curso
+                recarga += '<h1>' + respuesta.pistas[0].pista1 + '</h1> ';
+                recarga += '<div class="formgincana">';
+                for (let i = 0; i < participante.length; i++) {
+                    if (participante[i].length != 0) {
+                        recarga += '<p class="input-gincana">' + participante[i][0].mail_usu + '</p>';
+                        recarga += '<div>';
+                        recarga += '<p><i class="fas fa-check"></i></p>';
+                        //cruz
+                        /* recarga += '<p><i class="fas fa-times"></i></p>'; */
+                        recarga += '</div>';
+
+
+                    }
+                }
+                recarga += '<center>';
+                recarga += '<button class="botton-gincana" onclick="recargaSalaGin()">Refrescar</button>';
+                recarga += '</center>';
+                recarga += '</div>';
+            }
+
+        }
+        info.innerHTML = recarga;
+    }
+    ajax.send(formData)
+}
+
+//partida en curso
+/* function partida() {
+    var token = document.getElementById('token').getAttribute("content");
+    var info = document.getElementById("info");
+    var formData = new FormData();
+    formData.append('_token', token);
+    formData.append('_method', "POST");
+
+    var ajax = objetoAjax();
+
+    ajax.open("POST", "partida", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            var respuesta = JSON.parse(this.responseText);
+            var participante = JSON.parse(respuesta.elementos);
+            console.log(respuesta);
+            var recarga = '';
+            recarga += '<h1>' + respuesta.pistas[0].pista1 + '</h1> ';
+            recarga += '<div class="formgincana">';
+            for (let i = 0; i < participante.length; i++) {
+                if (participante[i].length != 0) {
+                    recarga += '<p class="input-gincana">' + participante[i][0].mail_usu + '</p>';
+                }
+            }
+            recarga += '</div>';
+
+        }
+        info.innerHTML = recarga;
+    }
+    ajax.send(formData)
+} */

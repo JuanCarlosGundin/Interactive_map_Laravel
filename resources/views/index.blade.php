@@ -28,6 +28,7 @@
     <script src="https://unpkg.com/esri-leaflet@2.3.2/dist/esri-leaflet.js" integrity="sha512-6LVib9wGnqVKIClCduEwsCub7iauLXpwrd5njR2J507m3A2a4HXJDLMiSZzjcksag3UluIfuW1KzuWVI5n/cuQ==" crossorigin=""></script>
     <link rel="stylesheet" href="../public/css/index.css">
     <link rel="shortcut icon" href="../public/img/logo2.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
@@ -54,6 +55,10 @@
               </li>
               <li class="nav-item">
                 <button type="button" class="btn btn-light" onclick="centrarJS()">Centrar</button>
+              </li>
+              {{-- para ponerle color a la vida --}}
+              <li class="nav-item">
+                <button type="button" class="btn btn-light" onclick="recargaSalaGin()">Recarga Sala</button>
               </li>
               <li class="nav-item">
                 <button type="button" class="btn btn-light" onclick="favoritomapaJS(<?php echo $id; ?>); return false;">FAVORITOS</button>

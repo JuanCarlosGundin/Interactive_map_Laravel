@@ -50,3 +50,6 @@ Route::put('actualizar/{id}',[MapaController::class,'actualizar']);
 //Gincana
 Route::post('gincanaPOST',[MapaController::class,'gincanaPOST']);
 Route::post('recargaSala',[MapaController::class,'recargaSala']);
+
+//empieza la gimcana
+Route::post('partida',[MapaController::class,'partida']);
