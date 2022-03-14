@@ -75,6 +75,21 @@
         background: rgba(163, 130, 86, 1);
     }
     
+    .botton-gincana {
+        font-family: 'Open Sans Condensed', sans-serif;
+        text-decoration: none;
+        position: relative;
+        width: 40%;
+        margin: 9px auto;
+        margin-right: 5px;
+        font-size: 17px;
+        color: #fff;
+        padding: 8px;
+        border-radius: 6px;
+        border: none;
+        background: rgba(163, 130, 86, 0.75);
+    }
+    
     .map {
         width: 100%;
     }

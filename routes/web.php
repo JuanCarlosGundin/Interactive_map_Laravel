@@ -48,4 +48,5 @@ Route::post('crear',[MapaController::class,'crear']);
 Route::put('actualizar/{id}',[MapaController::class,'actualizar']);
 
 //Gincana
-Route::post('/gincana',[MapaController::class,'gincana']);
+Route::post('gincanaPOST',[MapaController::class,'gincanaPOST']);
+Route::post('recargaSala',[MapaController::class,'recargaSala']);
