@@ -64,37 +64,37 @@
                 </a>
                 <ul class="dropdown-menu p-1" aria-labelledby="navbarDropdown">
                   <li><div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="Monumento" id="Monumento" onclick="mostrarmapaJS(<?php echo $id; ?>)">
+                    <input class="form-check-input" type="checkbox" value="Monumento" id="Monumento" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>
                     <label class="form-check-label" for="Monumento">
                         Monumentos
                     </label>
                   </div></li>
                   <li><div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="Museo" id="Museos" onclick="mostrarmapaJS(<?php echo $id; ?>)">
+                    <input class="form-check-input" type="checkbox" value="Museo" id="Museos" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>
                     <label class="form-check-label" for="Museos">
                         Museos
                     </label>
                   </div></li>
                   <li><div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="Restaurante" id="Restaurantes" onclick="mostrarmapaJS(<?php echo $id; ?>)">
+                    <input class="form-check-input" type="checkbox" value="Restaurante" id="Restaurantes" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>
                     <label class="form-check-label" for="Restaurantes">
                         Restaurantes
                     </label>
                   </div></li>
                   <li><div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="Metro" id="Metro" onclick="mostrarmapaJS(<?php echo $id; ?>)">
+                    <input class="form-check-input" type="checkbox" value="Metro" id="Metro" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>
                     <label class="form-check-label" for="Metro">
                         Metros
                     </label>
                   </div></li>
                   <li><div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="Hotel" id="Hotel" onclick="mostrarmapaJS(<?php echo $id; ?>)">
+                    <input class="form-check-input" type="checkbox" value="Hotel" id="Hotel" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>
                     <label class="form-check-label" for="Hotel">
                         Hoteles
                     </label>
                   </div></li>
                   <li><div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="Mercado" id="Mercado" onclick="mostrarmapaJS(<?php echo $id; ?>)">
+                    <input class="form-check-input" type="checkbox" value="Mercado" id="Mercado" onclick="mostrarmapaJS(<?php echo $id; ?>)" checked>
                     <label class="form-check-label" for="Mercado">
                         Mercados
                     </label>

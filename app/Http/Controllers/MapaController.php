@@ -35,9 +35,9 @@ class MapaController extends Controller
          ,[$Monumento,$Museo,$Restaurante,$Metro,$Hotel,$Mercado]);
         }else{
          $datos=DB::select('select * from tbl_etiquetas
-         INNER JOIN tbl_icono on tbl_localizaciones.id_icono=tbl_icono.id
          INNER JOIN tbl_localizaciones ON tbl_etiquetas.id_localizacion = tbl_localizaciones.id 
          INNER JOIN tbl_users ON tbl_etiquetas.id_user = tbl_users.id 
+         INNER JOIN tbl_icono on tbl_localizaciones.id_icono=tbl_icono.id
          where 
          tbl_users.id = ? and
          tbl_etiquetas.nom_etiqueta like ?'

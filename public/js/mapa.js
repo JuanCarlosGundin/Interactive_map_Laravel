@@ -38,7 +38,6 @@ map.setView([41.3533441, 2.1122431], 13);
 
 function mostrarmapaJS(id) {
     var idt = document.getElementById('usuarioID').value
-    console.log(idt)
         //Creamos el formdata que se enviara al controller
     var formData = new FormData();
     formData.append('_token', document.getElementById('token').getAttribute("content"));
