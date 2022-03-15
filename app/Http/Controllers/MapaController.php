@@ -224,25 +224,17 @@ class MapaController extends Controller
         $consulta_jug2=DB::select("SELECT * FROM tbl_sala inner join tbl_users on tbl_users.id=tbl_sala.id_jug2 where tbl_sala.id=?",[$id_sala]);
         $consulta_jug3=DB::select("SELECT * FROM tbl_sala inner join tbl_users on tbl_users.id=tbl_sala.id_jug3 where tbl_sala.id=?",[$id_sala]);
         array_push($elementos, $consulta_creador, $consulta_jug2, $consulta_jug3);
-        if ($id_usu==$consulta_creador[0]->id_creador){
-            DB::table('tbl_sala')->where('id','=',$id_sala)->update(["estado_sala"=>'1']);
-        }
         return response()->json(array('id_usu'=> $id_usu, 'pistas'=>$pistas ,'elementos'=>json_encode($elementos)));
 
     }
 
-    /* public function partida(){
-        $pistas=DB::select("SELECT * FROM tbl_juego where id='1';");
+    public function partida(){
         $id_sala=session()->get('id_sala');
         $id_usu=session()->get('id_usu');
-        $elementos = [];
         $consulta_creador=DB::select("SELECT * FROM tbl_sala inner join tbl_users on tbl_users.id=tbl_sala.id_creador where tbl_sala.id=?",[$id_sala]);
-        $consulta_jug2=DB::select("SELECT * FROM tbl_sala inner join tbl_users on tbl_users.id=tbl_sala.id_jug2 where tbl_sala.id=?",[$id_sala]);
-        $consulta_jug3=DB::select("SELECT * FROM tbl_sala inner join tbl_users on tbl_users.id=tbl_sala.id_jug3 where tbl_sala.id=?",[$id_sala]);
-        array_push($elementos, $consulta_creador, $consulta_jug2, $consulta_jug3);
-        if ($id_usu==$consulta_creador->id_creador){
+        if ($id_usu==$consulta_creador[0]->id_creador){
             DB::table('tbl_sala')->where('id','=',$id_sala)->update(["estado_sala"=>'1']);
         }
-        return response()->json(array('id_usu'=> $id_usu, 'pistas'=>$pistas ,'elementos'=>json_encode($elementos)));
-    } */
+        return response()->json(array('resultado'=> 'OK'));
+    }
 }

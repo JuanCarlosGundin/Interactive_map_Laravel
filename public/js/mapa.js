@@ -182,7 +182,6 @@ function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
     ajax.onreadystatechange = function() {
         if (ajax.readyState == 4 && ajax.status == 200) {
             var respuesta = JSON.parse(this.responseText);
-            console.log(respuesta.length)
             var num = respuesta.length
             if (num == 1) {
                 var recarga = '';
@@ -194,6 +193,10 @@ function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
                 }
                 recarga += '<p>' + descripcion_loc + '</p>';
                 recarga += '<p>' + direccion + '</p>';
+                recarga += '<form onsubmit="anadiretiqueta(); return false;">';
+                recarga += '<input type="text" placeholder="Introduce una etiqueta" id="eti">';
+                recarga += '<button>Enviar</button>';
+                recarga += '</form>';
                 recarga += '<button onclick="borrarfav(\'' + idt + '\',\'' + nombre + '\',\'' + direccion + '\',\'' + foto_loc + '\',\'' + descripcion_loc + '\'); return false;">Quitar favorito</button>';
             } else {
                 var recarga = '';
@@ -205,12 +208,20 @@ function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
                 }
                 recarga += '<p>' + descripcion_loc + '</p>';
                 recarga += '<p>' + direccion + '</p>';
+                recarga += '<form onsubmit="anadiretiqueta(); return false;">';
+                recarga += '<input type="text" placeholder="Introduce una etiqueta" id="eti">';
+                recarga += '<button>Enviar</button>';
+                recarga += '</form>';
                 recarga += '<button onclick="añadirfav(\'' + idt + '\',\'' + nombre + '\',\'' + direccion + '\',\'' + foto_loc + '\',\'' + descripcion_loc + '\'); return false;">Añadir favorito</button>';
             }
         }
         info.innerHTML = recarga;
     }
     ajax.send(formData)
+
+}
+
+function anadiretiqueta() {
 
 }
 
@@ -428,7 +439,7 @@ function recargaSalaGin() {
                 }
                 recarga += '<center>';
                 if (id_usu == participante[0][0].id_creador) {
-                    recarga += '<button class="botton-gincana" onclick="recargaSalaGin()">Empezar</button>';
+                    recarga += '<button class="botton-gincana" onclick="iniciarpartida()">Empezar</button>';
                 } else {
                     recarga += '<button class="botton-gincana" onclick="recargaSalaGin()">Refrescar</button>';
                 }
@@ -463,7 +474,7 @@ function recargaSalaGin() {
 }
 
 //partida en curso
-/* function partida() {
+function iniciarpartida() {
     var token = document.getElementById('token').getAttribute("content");
     var info = document.getElementById("info");
     var formData = new FormData();
@@ -476,20 +487,8 @@ function recargaSalaGin() {
     ajax.onreadystatechange = function() {
         if (ajax.readyState == 4 && ajax.status == 200) {
             var respuesta = JSON.parse(this.responseText);
-            var participante = JSON.parse(respuesta.elementos);
-            console.log(respuesta);
-            var recarga = '';
-            recarga += '<h1>' + respuesta.pistas[0].pista1 + '</h1> ';
-            recarga += '<div class="formgincana">';
-            for (let i = 0; i < participante.length; i++) {
-                if (participante[i].length != 0) {
-                    recarga += '<p class="input-gincana">' + participante[i][0].mail_usu + '</p>';
-                }
-            }
-            recarga += '</div>';
-
+            recargaSalaGin()
         }
-        info.innerHTML = recarga;
     }
     ajax.send(formData)
-} */
+}

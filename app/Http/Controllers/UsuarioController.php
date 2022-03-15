@@ -39,7 +39,7 @@ class UsuarioController extends Controller
         $request->session()->forget('mail_usu');
         $request->session()->forget('mail_admin');
         //Eliminar todo
-        $request->session()->flush();
+        /* $request->session()->flush(); */
         return redirect('/');
     }
 }
