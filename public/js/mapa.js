@@ -5,8 +5,10 @@ window.onload = function() {
     routingControl = {};
     //array de markers
     mapMarkers = [];
-    //marker de ubicacion
+    //marker de ubicacion cuando ti clicas al destino
     markerdrag = {};
+    //marker de tu ubicacion
+    markerubicacion = {};
 
     getLocation()
     mostrarmapaJS()
@@ -109,14 +111,14 @@ function mostrarmapaJS(id) {
                 mapMarkers = [];
             }
             for (let i = 0; i < respuesta.length; i++) {
-                popups(respuesta[i].direccion_loc, respuesta[i].nom_loc, respuesta[i].foto_loc, respuesta[i].descripcion_loc, respuesta[i].nombre_icono, respuesta[i].tipo_loc, id)
+                popups(respuesta[i].id_loc, respuesta[i].direccion_loc, respuesta[i].nom_loc, respuesta[i].foto_loc, respuesta[i].descripcion_loc, respuesta[i].nombre_icono, respuesta[i].tipo_loc, id)
             }
         }
     }
     ajax.send(formData)
 }
 
-function popups(direccion, nombre, foto_loc, descripcion_loc, nombre_icono, tipo_loc, id_usu) {
+function popups(id_loc, direccion, nombre, foto_loc, descripcion_loc, nombre_icono, tipo_loc, id_usu) {
 
     L.esri.Geocoding.geocode({
         apikey: 'AAPKbfa578cdbb364f19acd6f66898f69789JE8ubfzUeNcE_1-_m2wPRTzApVhYnHEmSOkCXQ-8Yn3wxhHQkRRyP69j7CkXt-ev'
@@ -133,9 +135,9 @@ function popups(direccion, nombre, foto_loc, descripcion_loc, nombre_icono, tipo
         });
         var marker = L.marker(results.results[0].latlng, { icon: icono });
         if (foto_loc != null) {
-            marker.bindPopup(`<p>${nombre}</p><img class="imagen" src='storage/${foto_loc}'><p>${descripcion_loc}</p><p>${direccion}</p><button></button>`).openPopup();
+            marker.bindPopup(`<center><b><p>${nombre}</p><hr></b><img class="imagen" src='storage/${foto_loc}'><p>${descripcion_loc}</p><p>${direccion}</p>`).openPopup();
         } else {
-            marker.bindPopup(`<p>${nombre}</p>`).openPopup();
+            marker.bindPopup(`<center><b><p>${nombre}</p><hr></b><p>${descripcion_loc}</p><p>${direccion}</p>`).openPopup();
         }
         marker.addTo(map)
             //meter el marker al grupo de markers
@@ -143,8 +145,7 @@ function popups(direccion, nombre, foto_loc, descripcion_loc, nombre_icono, tipo
             //cambia el color del marker
         marker._icon.classList.add("huechange");
         marker.on('click', function(event) {
-            mostrardiv();
-            mostrarinfo(direccion, nombre, foto_loc, descripcion_loc, id_usu);
+            mostrarinfo(id_loc, direccion, nombre, foto_loc, descripcion_loc, id_usu);
             console.log(this);
             if (Object.keys(routingControl).length != 0) {
                 map.removeControl(routingControl);
@@ -164,12 +165,9 @@ function popups(direccion, nombre, foto_loc, descripcion_loc, nombre_icono, tipo
     });
 }
 
-function mostrardiv() {
-    window.scrollTo(0, 500);
-}
-
 //muestra la informacion debajo del mapa
-function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
+function mostrarinfo(id_loc, direccion, nombre, foto_loc, descripcion_loc) {
+    console.log(id_loc);
     var info = document.getElementById("info");
     var idt = document.getElementById('usuarioID').value
     var formData = new FormData();
@@ -185,34 +183,34 @@ function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
             var num = respuesta.length
             if (num == 1) {
                 var recarga = '';
-                recarga += '<p>' + nombre + '</p>';
+                /* recarga += '<p>' + nombre + '</p>';
                 if (foto_loc != null) {
                     recarga += '<p><img class="imagen" src="storage/' + foto_loc + '"></p>';
                 } else {
                     recarga += '<p>Imagen no disponible</p>';
                 }
                 recarga += '<p>' + descripcion_loc + '</p>';
-                recarga += '<p>' + direccion + '</p>';
-                recarga += '<form onsubmit="anadiretiqueta(); return false;">';
+                recarga += '<p>' + direccion + '</p>'; */
+                recarga += '<form onsubmit="anadiretiqueta(\'' + id_loc + '\'); return false;">';
                 recarga += '<input type="text" placeholder="Introduce una etiqueta" id="eti">';
                 recarga += '<button>Enviar</button>';
                 recarga += '</form>';
-                recarga += '<button onclick="borrarfav(\'' + idt + '\',\'' + nombre + '\',\'' + direccion + '\',\'' + foto_loc + '\',\'' + descripcion_loc + '\'); return false;">Quitar favorito</button>';
+                recarga += '<button onclick="borrarfav(\'' + id_loc + '\',\'' + idt + '\',\'' + nombre + '\',\'' + direccion + '\',\'' + foto_loc + '\',\'' + descripcion_loc + '\'); return false;">Quitar favorito</button>';
             } else {
                 var recarga = '';
-                recarga += '<p>' + nombre + '</p>';
+                /* recarga += '<p>' + nombre + '</p>';
                 if (foto_loc != null) {
                     recarga += '<p><img class="imagen" src="storage/' + foto_loc + '"></p>';
                 } else {
                     recarga += '<p>Imagen no disponible</p>';
                 }
                 recarga += '<p>' + descripcion_loc + '</p>';
-                recarga += '<p>' + direccion + '</p>';
-                recarga += '<form onsubmit="anadiretiqueta(); return false;">';
+                recarga += '<p>' + direccion + '</p>'; */
+                recarga += '<form onsubmit="anadiretiqueta(\'' + id_loc + '\'); return false;">';
                 recarga += '<input type="text" placeholder="Introduce una etiqueta" id="eti">';
                 recarga += '<button>Enviar</button>';
                 recarga += '</form>';
-                recarga += '<button onclick="añadirfav(\'' + idt + '\',\'' + nombre + '\',\'' + direccion + '\',\'' + foto_loc + '\',\'' + descripcion_loc + '\'); return false;">Añadir favorito</button>';
+                recarga += '<button onclick="añadirfav(\'' + id_loc + '\',\'' + idt + '\',\'' + nombre + '\',\'' + direccion + '\',\'' + foto_loc + '\',\'' + descripcion_loc + '\'); return false;">Añadir favorito</button>';
             }
         }
         info.innerHTML = recarga;
@@ -221,8 +219,26 @@ function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
 
 }
 
-function anadiretiqueta() {
+function anadiretiqueta(id_loc) {
 
+    var eti = document.getElementById("eti").value;
+    var formData = new FormData();
+    formData.append('_token', document.getElementById('token').getAttribute("content"));
+    formData.append('_method', "POST");
+    formData.append('id_localizacion', id_loc);
+    formData.append('nom_etiqueta', eti);
+
+
+    var ajax = objetoAjax();
+    ajax.open("POST", "anadiretiqueta", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            var respuesta = JSON.parse(this.responseText);
+            console.log(respuesta.resultado)
+            document.getElementById("eti").value = "";
+        }
+    }
+    ajax.send(formData)
 }
 
 function area() {
@@ -250,7 +266,10 @@ function getLocation() {
 function showPosition(position) {
     lat = position.coords.latitude;
     lon = position.coords.longitude;
-    var tuubicacion = L.marker(L.latLng(lat, lon)).addTo(map)
+    if (Object.keys(markerubicacion).length != 0) {
+        map.removeLayer(markerubicacion);
+    }
+    markerubicacion = L.marker(L.latLng(lat, lon)).addTo(map)
 }
 
 map.on('click', onMapClick);
@@ -310,7 +329,7 @@ function favoritomapaJS(id) {
                 mapMarkers = [];
             }
             for (let i = 0; i < respuesta.length; i++) {
-                popups(respuesta[i].direccion_loc, respuesta[i].nom_loc, respuesta[i].foto_loc, respuesta[i].descripcion_loc, respuesta[i].nombre_icono, respuesta[i].tipo_loc, id)
+                popups(respuesta[i].id_loc, respuesta[i].direccion_loc, respuesta[i].nom_loc, respuesta[i].foto_loc, respuesta[i].descripcion_loc, respuesta[i].nombre_icono, respuesta[i].tipo_loc, id)
 
             }
         }
@@ -318,7 +337,7 @@ function favoritomapaJS(id) {
     ajax.send(formData)
 }
 
-function añadirfav(id, nombre, direccion, foto_loc, descripcion_loc) {
+function añadirfav(id_loc, id, nombre, direccion, foto_loc, descripcion_loc) {
     var formData = new FormData();
     formData.append('_token', document.getElementById('token').getAttribute("content"));
     formData.append('id_usu', id);
@@ -329,13 +348,13 @@ function añadirfav(id, nombre, direccion, foto_loc, descripcion_loc) {
         if (ajax.readyState == 4 && ajax.status == 200) {
             var respuesta = JSON.parse(this.responseText);
             console.log(respuesta)
-            mostrarinfo(direccion, nombre, foto_loc, descripcion_loc);
+            mostrarinfo(id_loc, direccion, nombre, foto_loc, descripcion_loc);
         }
     }
     ajax.send(formData)
 }
 
-function borrarfav(id, nombre, direccion, foto_loc, descripcion_loc) {
+function borrarfav(id_loc, id, nombre, direccion, foto_loc, descripcion_loc) {
     var formData = new FormData();
     formData.append('_token', document.getElementById('token').getAttribute("content"));
     formData.append('id_usu', id);
@@ -346,7 +365,7 @@ function borrarfav(id, nombre, direccion, foto_loc, descripcion_loc) {
         if (ajax.readyState == 4 && ajax.status == 200) {
             var respuesta = JSON.parse(this.responseText);
             console.log(respuesta)
-            mostrarinfo(direccion, nombre, foto_loc, descripcion_loc);
+            mostrarinfo(id_loc, direccion, nombre, foto_loc, descripcion_loc);
         }
     }
     ajax.send(formData)
@@ -362,12 +381,16 @@ function formgincana() {
     var recarga = '';
     recarga += '<div class="formgincana">';
     recarga += '<form method="GET">';
-    recarga += '<h1>Gincana</h1> ';
-    recarga += '<input class="input-gincana" type="text" name="nom_sala" id="nom_sala" placeholder="Nombre Sala">';
-    recarga += '<input class="input-gincana" type="text" name="contra_sala" id="contra_sala" placeholder="Codigo Sala">';
+    recarga += '<h1 class="titulo">Gincana</h1> ';
+    recarga += '<div>';
     recarga += '<center>';
+    recarga += '<input type="text" class="input-gincana" name="nom_sala" id="nom_sala" placeholder="Nombre Sala">';
+    recarga += '<input type="text" class="input-gincana" name="contra_sala" id="contra_sala" placeholder="Codigo Sala">';
+    recarga += '</div>';
+    recarga += '<div>';
     recarga += '<input class="botton-gincana" type="submit" name="boton" value="Crear" onclick="gincanaGET(`crear`); return false;">';
     recarga += '<input class="botton-gincana" type="submit" name="boton" value="Unirse" onclick="gincanaGET(`unirse`); return false;">';
+    recarga += '</div>';
     recarga += '<div id=mensaje></div>';
     recarga += '</center>';
     recarga += '</form>';
@@ -400,6 +423,8 @@ function gincanaGET(valor) {
                 mensaje.innerHTML = '<p>Esta sala no existe</p>';
             } else if (respuesta.resultado == "NOKcrear") {
                 mensaje.innerHTML = '<p>El nombre de la sala ya existe</p>';
+            } else if (respuesta.resultado == "NOKllena") {
+                mensaje.innerHTML = '<p>Sala llena :(</p>';
             } else {
                 mensaje.innerHTML = '<p>Funciona</p>';
                 recargaSalaGin();
@@ -451,18 +476,18 @@ function recargaSalaGin() {
                 recarga += '<div class="formgincana">';
                 for (let i = 0; i < participante.length; i++) {
                     if (participante[i].length != 0) {
-                        recarga += '<p class="input-gincana">' + participante[i][0].mail_usu + '</p>';
-                        recarga += '<div>';
+                        recarga += '<div class="input-gincana">';
+                        recarga += '<p>' + participante[i][0].mail_usu + '</p>';
+                        recarga += '</div>';
+                        recarga += '<div class="icono-gincana">';
                         recarga += '<p><i class="fas fa-check"></i></p>';
+                        recarga += '</div>';
                         //cruz
                         /* recarga += '<p><i class="fas fa-times"></i></p>'; */
-                        recarga += '</div>';
-
-
                     }
                 }
                 recarga += '<center>';
-                recarga += '<button class="botton-gincana" onclick="recargaSalaGin()">Refrescar</button>';
+                recarga += '<button class="botton-sala" onclick="recargaSalaGin()">Refrescar</button>';
                 recarga += '</center>';
                 recarga += '</div>';
             }

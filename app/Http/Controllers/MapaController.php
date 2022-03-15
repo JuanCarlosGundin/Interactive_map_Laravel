@@ -24,7 +24,7 @@ class MapaController extends Controller
         $Hotel = $request->input('Hotel');
         $Mercado = $request->input('Mercado'); 
         if($etiqueta==666){
-        $datos=DB::select('select * from tbl_localizaciones
+        $datos=DB::select('select *, tbl_localizaciones.id as id_loc from tbl_localizaciones
          INNER JOIN tbl_icono on tbl_localizaciones.id_icono=tbl_icono.id
          where tipo_loc like ? or 
          tipo_loc like ? or 
@@ -34,19 +34,20 @@ class MapaController extends Controller
          tipo_loc like ?'
          ,[$Monumento,$Museo,$Restaurante,$Metro,$Hotel,$Mercado]);
         }else{
-         $datos=DB::select('select * from tbl_etiquetas
+         $datos=DB::select('select *, tbl_localizaciones.id as id_loc from tbl_etiquetas
          INNER JOIN tbl_localizaciones ON tbl_etiquetas.id_localizacion = tbl_localizaciones.id 
          INNER JOIN tbl_users ON tbl_etiquetas.id_user = tbl_users.id 
          INNER JOIN tbl_icono on tbl_localizaciones.id_icono=tbl_icono.id
          where 
          tbl_users.id = ? and
-         tbl_etiquetas.nom_etiqueta like ?',[$id,"%".$etiqueta."%"]);}
+         tbl_etiquetas.nom_etiqueta like ?',[$id,"%".$etiqueta."%"]);
+        }
         return response()->json($datos);
     }
     //mostrar favorito
     public function mostrarfavorito(Request $request) {
         $id= $request->input('id');
-        $datos=DB::select('select * from tbl_favoritos
+        $datos=DB::select('select *, tbl_localizaciones.id as id_loc from tbl_favoritos
         INNER JOIN tbl_localizaciones ON tbl_favoritos.id_localizacion = tbl_localizaciones.id 
         INNER JOIN tbl_users ON tbl_favoritos.id_user = tbl_users.id 
         INNER JOIN tbl_icono on tbl_localizaciones.id_icono=tbl_icono.id 
@@ -198,7 +199,7 @@ class MapaController extends Controller
                     $request->session()->put('id_sala',$idsala->id);
                     return response()->json(array('resultado'=> 'OK'));
                 }else{
-                    return response()->json(array('resultado'=> 'NOKunirse'));
+                    return response()->json(array('resultado'=> 'NOKllena'));
                 }
             }
         }else{
@@ -225,7 +226,6 @@ class MapaController extends Controller
         $consulta_jug3=DB::select("SELECT * FROM tbl_sala inner join tbl_users on tbl_users.id=tbl_sala.id_jug3 where tbl_sala.id=?",[$id_sala]);
         array_push($elementos, $consulta_creador, $consulta_jug2, $consulta_jug3);
         return response()->json(array('id_usu'=> $id_usu, 'pistas'=>$pistas ,'elementos'=>json_encode($elementos)));
-
     }
 
     public function partida(){
@@ -235,6 +235,23 @@ class MapaController extends Controller
         if ($id_usu==$consulta_creador[0]->id_creador){
             DB::table('tbl_sala')->where('id','=',$id_sala)->update(["estado_sala"=>'1']);
         }
+        $contador=DB::select("SELECT count(id_creador) + count(id_jug2) + count(id_jug3) as contador FROM tbl_sala where id=?",[$id_sala]);
+        DB::table('tbl_sala')->where('id','=',$id_sala)->update(["jugadores_sala"=>$contador[0]->contador]);
         return response()->json(array('resultado'=> 'OK'));
+    }
+
+    public function anadiretiqueta(Request $request) {
+        $id_usu=session()->get('id_usu');
+        $nom_etiqueta= $request->input('nom_etiqueta');
+        $id_localizacion= $request->input('id_localizacion');
+        DB::beginTransaction();
+        try {
+            DB::select("INSERT INTO `tbl_etiquetas` (`nom_etiqueta`, `id_user`, `id_localizacion`) VALUES (?, ?, ?)",[$nom_etiqueta,$id_usu,$id_localizacion]);
+            DB::commit();
+            return response()->json(array('resultado'=> 'OK'));
+        }   catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(array('resultado'=> $e->getMessage()));
+        }
     }
 }
