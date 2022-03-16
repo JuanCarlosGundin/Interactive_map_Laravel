@@ -186,16 +186,16 @@ class MapaController extends Controller
             if($datos==0){
                 return response()->json(array('resultado'=> 'NOKunirse'));
             }else{
+                $idsala= DB::table('tbl_sala')->where('nom_sala','=',$nom_sala)->where('estado_sala','=',"0")->first();
+                DB::select("SELECT * FROM tbl_sala where id=?",[$idsala->id]);
                 $id_jug2 = DB::table('tbl_sala')->where('nom_sala','=',$nom_sala)->whereNotNull('id_jug2')->count();
                 $id_jug3 = DB::table('tbl_sala')->where('nom_sala','=',$nom_sala)->whereNotNull('id_jug3')->count();
                 if ($id_jug2==0) {
                     DB::table('tbl_sala')->where('nom_sala','=',$nom_sala)->update(["id_jug2"=>$id]);
-                    $idsala= DB::table('tbl_sala')->where('nom_sala','=',$nom_sala)->where('estado_sala','=',"0")->first();
                     $request->session()->put('id_sala',$idsala->id);
                     return response()->json(array('resultado'=> 'OK'));
                 }else if ($id_jug3==0){
                     DB::table('tbl_sala')->where('nom_sala','=',$nom_sala)->update(["id_jug3"=>$id]);
-                    $idsala= DB::table('tbl_sala')->where('nom_sala','=',$nom_sala)->where('estado_sala','=',"0")->first();
                     $request->session()->put('id_sala',$idsala->id);
                     return response()->json(array('resultado'=> 'OK'));
                 }else{

@@ -162,13 +162,17 @@ function popups(id_loc, direccion, nombre, foto_loc, descripcion_loc, nombre_ico
                 show: false
             }).addTo(map);
         });
+        marker.getPopup().on('remove', function() {
+            var infomap = document.getElementById("infomap");
+            infomap.innerHTML = "";
+        });
     });
 }
 
 //muestra la informacion debajo del mapa
 function mostrarinfo(id_loc, direccion, nombre, foto_loc, descripcion_loc) {
     console.log(id_loc);
-    var info = document.getElementById("info");
+    var infomap = document.getElementById("infomap");
     var idt = document.getElementById('usuarioID').value
     var formData = new FormData();
     formData.append('_token', document.getElementById('token').getAttribute("content"));
@@ -213,7 +217,7 @@ function mostrarinfo(id_loc, direccion, nombre, foto_loc, descripcion_loc) {
                 recarga += '<button onclick="añadirfav(\'' + id_loc + '\',\'' + idt + '\',\'' + nombre + '\',\'' + direccion + '\',\'' + foto_loc + '\',\'' + descripcion_loc + '\'); return false;">Añadir favorito</button>';
             }
         }
-        info.innerHTML = recarga;
+        infomap.innerHTML = recarga;
     }
     ajax.send(formData)
 
