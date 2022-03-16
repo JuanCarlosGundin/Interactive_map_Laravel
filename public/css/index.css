@@ -101,9 +101,13 @@
         margin-bottom: 8px;
     }
     
-    .rojo {}
+    .rojo {
+        color: red;
+    }
     
-    .verde {}
+    .verde {
+        color: green;
+    }
     
     .input-gincana:focus {
         outline: none;
