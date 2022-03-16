@@ -67,12 +67,12 @@
         text-align: center;
         position: relative;
         width: 80%;
-        float: left;
+        /* float: left; */
         display: block;
-        margin: 9px auto;
+        margin: 6px auto;
         font-size: 17px;
         color: #fff;
-        padding: 3px;
+        /* padding: 3px; */
         border-radius: 6px;
         border: none;
         background: rgba(163, 130, 86, 0.75);
@@ -168,4 +168,20 @@
         font-size: 40px;
         color: #ddd;
         text-shadow: 3px 3px 10px #000;
+    }
+    
+    .yellow {
+        color: yellow;
+    }
+    
+    .grey {
+        color: grey;
+    }
+    
+    .div-info {
+        float: left;
+    }
+    
+    .div-fav {
+        float: right;
     }
