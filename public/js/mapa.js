@@ -126,14 +126,14 @@ function popups(direccion, nombre, foto_loc, descripcion_loc, nombre_icono, tipo
             return;
         }
         var icono = L.icon({
-            iconUrl: 'http://localhost/laravel/Proyecto4_mapas/storage/app/public/' + nombre_icono,
+            iconUrl: 'http://localhost/Proyecto4_mapas/storage/app/public/' + nombre_icono,
             iconSize: [40, 40],
             iconAnchor: [20, 20],
             popupAnchor: [0, -20]
         });
         var marker = L.marker(results.results[0].latlng, { icon: icono });
         if (foto_loc != null) {
-            marker.bindPopup(`<p>${nombre}</p><img class="imagen" src='http://localhost/laravel/Proyecto4_mapas/storage/app/public/${foto_loc}'><p>${descripcion_loc}</p><p>${direccion}</p><button></button>`).openPopup();
+            marker.bindPopup(`<p>${nombre}</p><img class="imagen" src='http://localhost/Proyecto4_mapas/storage/app/public/${foto_loc}'><p>${descripcion_loc}</p><p>${direccion}</p><button></button>`).openPopup();
         } else {
             marker.bindPopup(`<p>${nombre}</p>`).openPopup();
         }
@@ -188,7 +188,7 @@ function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
                 var recarga = '';
                 recarga += '<p>' + nombre + '</p>';
                 if (foto_loc != null) {
-                    recarga += '<p><img class="imagen" src="http://localhost/laravel/Proyecto4_mapas/storage/app/public/' + foto_loc + '"></p>';
+                    recarga += '<p><img class="imagen" src="http://localhost/Proyecto4_mapas/storage/app/public/' + foto_loc + '"></p>';
                 } else {
                     recarga += '<p>Imagen no disponible</p>';
                 }
@@ -199,7 +199,7 @@ function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
                 var recarga = '';
                 recarga += '<p>' + nombre + '</p>';
                 if (foto_loc != null) {
-                    recarga += '<p><img class="imagen" src="http://localhost/laravel/Proyecto4_mapas/storage/app/public/' + foto_loc + '"></p>';
+                    recarga += '<p><img class="imagen" src="http://localhost/Proyecto4_mapas/storage/app/public/' + foto_loc + '"></p>';
                 } else {
                     recarga += '<p>Imagen no disponible</p>';
                 }
@@ -427,9 +427,10 @@ function recargaSalaGin() {
                     }
                 }
                 recarga += '<center>';
-                recarga += '<button class="botton-gincana" onclick="recargaSalaGin()">Refrescar</button>';
                 if (id_usu == participante[0][0].id_creador) {
                     recarga += '<button class="botton-gincana" onclick="recargaSalaGin()">Empezar</button>';
+                } else {
+                    recarga += '<button class="botton-gincana" onclick="recargaSalaGin()">Refrescar</button>';
                 }
                 recarga += '</center>';
                 recarga += '</div>';
