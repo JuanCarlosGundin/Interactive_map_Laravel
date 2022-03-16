@@ -187,34 +187,26 @@ function mostrarinfo(id_loc, direccion, nombre, foto_loc, descripcion_loc) {
             var num = respuesta.length
             if (num == 1) {
                 var recarga = '';
-                /* recarga += '<p>' + nombre + '</p>';
-                if (foto_loc != null) {
-                    recarga += '<p><img class="imagen" src="storage/' + foto_loc + '"></p>';
-                } else {
-                    recarga += '<p>Imagen no disponible</p>';
-                }
-                recarga += '<p>' + descripcion_loc + '</p>';
-                recarga += '<p>' + direccion + '</p>'; */
+                recarga += '<div class="div-info">';
                 recarga += '<form onsubmit="anadiretiqueta(\'' + id_loc + '\'); return false;">';
                 recarga += '<input type="text" placeholder="Introduce una etiqueta" id="eti">';
-                recarga += '<button>Enviar</button>';
+                recarga += '<button class="btn btn-outline-dark btn-sm">Enviar</button>';
                 recarga += '</form>';
-                recarga += '<button onclick="borrarfav(\'' + id_loc + '\',\'' + idt + '\',\'' + nombre + '\',\'' + direccion + '\',\'' + foto_loc + '\',\'' + descripcion_loc + '\'); return false;">Quitar favorito</button>';
+                recarga += '</div>';
+                recarga += '<div class="div-fav">';
+                recarga += '<button onclick="borrarfav(\'' + id_loc + '\',\'' + idt + '\',\'' + nombre + '\',\'' + direccion + '\',\'' + foto_loc + '\',\'' + descripcion_loc + '\'); return false;"><i class="fa-solid fa-star yellow"></i></button>';
+                recarga += '</div>';
             } else {
                 var recarga = '';
-                /* recarga += '<p>' + nombre + '</p>';
-                if (foto_loc != null) {
-                    recarga += '<p><img class="imagen" src="storage/' + foto_loc + '"></p>';
-                } else {
-                    recarga += '<p>Imagen no disponible</p>';
-                }
-                recarga += '<p>' + descripcion_loc + '</p>';
-                recarga += '<p>' + direccion + '</p>'; */
+                recarga += '<div class="div-info">';
                 recarga += '<form onsubmit="anadiretiqueta(\'' + id_loc + '\'); return false;">';
                 recarga += '<input type="text" placeholder="Introduce una etiqueta" id="eti">';
-                recarga += '<button>Enviar</button>';
+                recarga += '<button class="btn btn-outline-dark btn-sm">Enviar</button>';
                 recarga += '</form>';
-                recarga += '<button onclick="añadirfav(\'' + id_loc + '\',\'' + idt + '\',\'' + nombre + '\',\'' + direccion + '\',\'' + foto_loc + '\',\'' + descripcion_loc + '\'); return false;">Añadir favorito</button>';
+                recarga += '</div>';
+                recarga += '<div class="div-fav">';
+                recarga += '<button onclick="añadirfav(\'' + id_loc + '\',\'' + idt + '\',\'' + nombre + '\',\'' + direccion + '\',\'' + foto_loc + '\',\'' + descripcion_loc + '\'); return false;"><i class="fa-solid fa-star grey"></i></button>';
+                recarga += '</div>';
             }
         }
         infomap.innerHTML = recarga;
@@ -381,6 +373,7 @@ function centrarJS() {
 
 //Formulario gincana
 function formgincana() {
+    window.scrollTo(0, document.body.scrollHeight);
     var info = document.getElementById("info");
     var recarga = '';
     recarga += '<div class="formgincana">';
@@ -468,9 +461,9 @@ function recargaSalaGin() {
                 }
                 recarga += '<center>';
                 if (id_usu == participante[0][0].id_creador) {
-                    recarga += '<button class="botton-gincana" onclick="iniciarpartida()">Empezar</button>';
+                    recarga += '<button class="botton-sala" onclick="iniciarpartida()">Empezar</button>';
                 } else {
-                    recarga += '<button class="botton-gincana" onclick="recargaSalaGin()">Refrescar</button>';
+                    recarga += '<button class="botton-sala" onclick="recargaSalaGin()">Refrescar</button>';
                 }
                 recarga += '</center>';
                 recarga += '</div>';
