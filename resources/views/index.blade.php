@@ -37,32 +37,23 @@
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <br>
+          <button class="btn btn-light" onclick="formgincana()"><img src="../public/img/gincana.png" class="gincanaic"></button>
+          <form action='{{url('logout')}}' method='get'>
+            <button class="btn btn-light"><img src="../public/img/logout.png" class="logoutic"></button>
+          </form>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="d-flex">
+            <form class="d-flex p-2">
               <input type="hidden" id="usuarioID" value='<?php echo $id; ?>'>
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="etiqueta" onkeyup="mostrarmapaJS(<?php echo $id; ?>); return false;">
-              <button class="btn btn-outline-success" type="submit">Search</button>
+              <input class="form-control me-2" type="search" placeholder="Etiquetas" aria-label="Search" id="etiqueta" onkeyup="mostrarmapaJS(<?php echo $id; ?>); return false;">
             </form>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <form action='{{url('logout')}}' method='get'>
-                  <button class="btn btn-light"><img src="../public/img/logout.png" class="logoutic"></button>
-              </form>
-              </li>
-              <li class="nav-item">
-                <button class="btn btn-light" onclick="formgincana()"><img src="../public/img/gincana.png" class="logoutic"></button>
-              </li>
+              <center>
               <li class="nav-item">
                 <button type="button" class="btn btn-light" onclick="centrarJS()">Centrar</button>
-              </li>
-              {{-- para ponerle color a la vida --}}
-              <li class="nav-item">
                 <button type="button" class="btn btn-light" onclick="recargaSalaGin()">Recarga Sala</button>
-              </li>
-              <li class="nav-item">
                 <button type="button" class="btn btn-light" onclick="favoritomapaJS(<?php echo $id; ?>); return false;">FAVORITOS</button>
               </li>
+              <center>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Dropdown

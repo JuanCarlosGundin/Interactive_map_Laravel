@@ -53,3 +53,6 @@ Route::post('recargaSala',[MapaController::class,'recargaSala']);
 
 //empieza la gimcana
 Route::post('partida',[MapaController::class,'partida']);
+
+//añadir etiqueta
+Route::post('anadiretiqueta',[MapaController::class,'anadiretiqueta']);

@@ -20,6 +20,13 @@
         float: right;
     }
     
+    .gincanaic {
+        padding-top: 1vh;
+        padding-bottom: 1vh;
+        width: 9vh;
+        float: right;
+    }
+    
     .bt-logout {
         background-color: white;
         border-color: black;
@@ -47,26 +54,59 @@
         padding-top: 10px;
         margin: auto;
         width: 260px;
-        height: 260px;
+        height: 200px;
         border-radius: 5px;
         background: rgba(222, 184, 135, 0.50);
-        box-shadow: 1px 1px 50px #000;
+        box-shadow: 1px 1px 15px #000;
         border-radius: 6px;
     }
     
     .input-gincana {
         font-family: 'Open Sans Condensed', sans-serif;
         text-decoration: none;
+        text-align: center;
         position: relative;
         width: 80%;
+        float: left;
         display: block;
         margin: 9px auto;
         font-size: 17px;
         color: #fff;
-        padding: 8px;
+        padding: 3px;
         border-radius: 6px;
         border: none;
         background: rgba(163, 130, 86, 0.75);
+    }
+    
+    .icono-gincana {
+        font-family: 'Open Sans Condensed', sans-serif;
+        text-decoration: none;
+        text-align: center;
+        position: relative;
+        width: 20%;
+        float: left;
+        display: block;
+        margin: 9px auto;
+        font-size: 17px;
+        color: #fff;
+        padding: 3px;
+        border-radius: 6px;
+        border: none;
+        background: rgba(163, 130, 86, 0.75);
+    }
+    
+    .input-gincana p,
+    .icono-gincana p {
+        margin-top: 8px;
+        margin-bottom: 8px;
+    }
+    
+    .rojo {
+        color: red;
+    }
+    
+    .verde {
+        color: green;
     }
     
     .input-gincana:focus {
@@ -78,9 +118,25 @@
     .botton-gincana {
         font-family: 'Open Sans Condensed', sans-serif;
         text-decoration: none;
+        left: 9.5%;
         position: relative;
         width: 40%;
-        margin: 9px auto;
+        /* margin: 9px auto; */
+        margin-right: 5px;
+        font-size: 17px;
+        color: #fff;
+        padding: 8px;
+        border-radius: 6px;
+        border: none;
+        background: rgba(163, 130, 86, 0.75);
+    }
+    
+    .botton-sala {
+        font-family: 'Open Sans Condensed', sans-serif;
+        text-decoration: none;
+        position: relative;
+        width: 40%;
+        /* margin: 9px auto; */
         margin-right: 5px;
         font-size: 17px;
         color: #fff;
@@ -95,6 +151,16 @@
     }
     
     h1 {
+        font-family: 'Open Sans Condensed', sans-serif;
+        position: relative;
+        margin-top: 0px;
+        text-align: center;
+        font-size: 30px;
+        /* color: #ddd; */
+        text-shadow: 1px 1px 1px #000;
+    }
+    
+    .titulo {
         font-family: 'Open Sans Condensed', sans-serif;
         position: relative;
         margin-top: 0px;
