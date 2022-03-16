@@ -126,14 +126,14 @@ function popups(direccion, nombre, foto_loc, descripcion_loc, nombre_icono, tipo
             return;
         }
         var icono = L.icon({
-            iconUrl: 'http://localhost/laravel/Proyecto4_mapas/storage/app/public/' + nombre_icono,
+            iconUrl: 'storage/' + nombre_icono,
             iconSize: [40, 40],
             iconAnchor: [20, 20],
             popupAnchor: [0, -20]
         });
         var marker = L.marker(results.results[0].latlng, { icon: icono });
         if (foto_loc != null) {
-            marker.bindPopup(`<p>${nombre}</p><img class="imagen" src='http://localhost/laravel/Proyecto4_mapas/storage/app/public/${foto_loc}'><p>${descripcion_loc}</p><p>${direccion}</p><button></button>`).openPopup();
+            marker.bindPopup(`<p>${nombre}</p><img class="imagen" src='storage/${foto_loc}'><p>${descripcion_loc}</p><p>${direccion}</p><button></button>`).openPopup();
         } else {
             marker.bindPopup(`<p>${nombre}</p>`).openPopup();
         }
@@ -188,7 +188,7 @@ function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
                 var recarga = '';
                 recarga += '<p>' + nombre + '</p>';
                 if (foto_loc != null) {
-                    recarga += '<p><img class="imagen" src="http://localhost/laravel/Proyecto4_mapas/storage/app/public/' + foto_loc + '"></p>';
+                    recarga += '<p><img class="imagen" src="storage/' + foto_loc + '"></p>';
                 } else {
                     recarga += '<p>Imagen no disponible</p>';
                 }
@@ -199,7 +199,7 @@ function mostrarinfo(direccion, nombre, foto_loc, descripcion_loc) {
                 var recarga = '';
                 recarga += '<p>' + nombre + '</p>';
                 if (foto_loc != null) {
-                    recarga += '<p><img class="imagen" src="http://localhost/laravel/Proyecto4_mapas/storage/app/public/' + foto_loc + '"></p>';
+                    recarga += '<p><img class="imagen" src="storage/' + foto_loc + '"></p>';
                 } else {
                     recarga += '<p>Imagen no disponible</p>';
                 }
@@ -237,6 +237,7 @@ function getLocation() {
 }
 
 function showPosition(position) {
+
     lat = position.coords.latitude;
     lon = position.coords.longitude;
     var tuubicacion = L.marker(L.latLng(lat, lon)).addTo(map)
@@ -412,7 +413,7 @@ function recargaSalaGin() {
     ajax.onreadystatechange = function() {
         if (ajax.readyState == 4 && ajax.status == 200) {
             var respuesta = JSON.parse(this.responseText);
-            var id_usu = respuesta.id_usu;
+            var id_usu = document.getElementById('usuarioID').value
             //console.log(id_usu);
             var participante = JSON.parse(respuesta.elementos);
             //console.log(participante);
@@ -429,11 +430,11 @@ function recargaSalaGin() {
                 recarga += '<center>';
                 recarga += '<button class="botton-gincana" onclick="recargaSalaGin()">Refrescar</button>';
                 if (id_usu == participante[0][0].id_creador) {
-                    recarga += '<button class="botton-gincana" onclick="recargaSalaGin()">Empezar</button>';
+                    recarga += '<button class="botton-gincana" onclick="empezarPartida()">Empezar</button>';
                 }
                 recarga += '</center>';
                 recarga += '</div>';
-            } else {
+            }if(participante[0][0].estado_sala == 1) {
                 //partida en curso
                 recarga += '<h1>' + respuesta.pistas[0].pista1 + '</h1> ';
                 recarga += '<div class="formgincana">';
@@ -441,7 +442,6 @@ function recargaSalaGin() {
                     if (participante[i].length != 0) {
                         recarga += '<p class="input-gincana">' + participante[i][0].mail_usu + '</p>';
                         recarga += '<div>';
-                        recarga += '<p><i class="fas fa-check"></i></p>';
                         //cruz
                         /* recarga += '<p><i class="fas fa-times"></i></p>'; */
                         recarga += '</div>';
@@ -450,16 +450,134 @@ function recargaSalaGin() {
                     }
                 }
                 recarga += '<center>';
-                recarga += '<button class="botton-gincana" onclick="recargaSalaGin()">Refrescar</button>';
+                recarga += '<input type="hidden" id="PreguntaNum" value="1">';
+                recarga += '<button class="botton-gincana" onclick="comprobarGin()">Validar</button>';
                 recarga += '</center>';
                 recarga += '</div>';
-            }
+            }if(participante[0][0].estado_sala == 2) {
+                //partida en curso
+                recarga += '<h1>' + respuesta.pistas[0].pista2 + '</h1> ';
+                recarga += '<div class="formgincana">';
+                for (let i = 0; i < participante.length; i++) {
+                    if (participante[i].length != 0) {
+                        recarga += '<p class="input-gincana">' + participante[i][0].mail_usu + '</p>';
+                        recarga += '<div>';
+                        //cruz
+                        /* recarga += '<p><i class="fas fa-times"></i></p>'; */
+                        recarga += '</div>';
 
+
+                    }
+                }
+                recarga += '<center>';
+                recarga += '<input type="hidden" id="PreguntaNum" value="2">';
+                recarga += '<button class="botton-gincana" onclick="comprobarGin()">Validar</button>';
+                recarga += '</center>';
+                recarga += '</div>';
+            }if(participante[0][0].estado_sala == 3) {
+                //partida en curso
+                recarga += '<h1>' + respuesta.pistas[0].pista3 + '</h1> ';
+                recarga += '<div class="formgincana">';
+                for (let i = 0; i < participante.length; i++) {
+                    if (participante[i].length != 0) {
+                        recarga += '<p class="input-gincana">' + participante[i][0].mail_usu + '</p>';
+                        recarga += '<div>';
+                        //cruz
+                        /* recarga += '<p><i class="fas fa-times"></i></p>'; */
+                        recarga += '</div>';
+                    }
+                }
+                recarga += '<center>';
+                recarga += '<input type="hidden" id="PreguntaNum" value="3">';
+                recarga += '<button class="botton-gincana" onclick="comprobarGin()">Validar</button>';
+                recarga += '</center>';
+                recarga += '</div>';
+            }if(participante[0][0].estado_sala == 4) {
+                //partida en curso
+                recarga += '<h1> GINCANA COMPLETADA!! Felicidades</h1> ';
+            }
         }
         info.innerHTML = recarga;
     }
     ajax.send(formData)
 }
+function empezarPartida(){
+    var token = document.getElementById('token').getAttribute("content");
+    var formData = new FormData();
+    formData.append('_token', token);
+    formData.append('_method', "POST");
+    var ajax = objetoAjax();
+    ajax.open("POST", "empezarPartida", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            recargaSalaGin()
+        }
+    }
+    ajax.send(formData)
+}
+function comprobarGin(){
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(comprobarloc);
+    } else {
+        alert("Geolocation is not supported by this browser");
+    }
+}
+
+
+function comprobarloc(position) {
+    var thresholdDistance = 100;// In meters
+    lat = position.coords.latitude;
+    lon = position.coords.longitude;
+    //var userPosition = L.latLng(lat, lon);
+    var token = document.getElementById('token').getAttribute("content");
+    var formData = new FormData();
+    formData.append('_token', token);
+    var ajax = objetoAjax();
+    ajax.open("POST", "checkloc", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            var respuesta = JSON.parse(this.responseText);
+            var pregunta=document.getElementById('PreguntaNum').value
+            console.log(respuesta)
+            var localizacion = eval("respuesta[0].loc"+pregunta)
+            L.esri.Geocoding.geocode({apikey: 'AAPKbfa578cdbb364f19acd6f66898f69789JE8ubfzUeNcE_1-_m2wPRTzApVhYnHEmSOkCXQ-8Yn3wxhHQkRRyP69j7CkXt-ev'
+            }).text(localizacion).run(function(err, results, response){
+                var latSitio = results.results[0].latlng.lat
+                var lngSitio = results.results[0].latlng.lng
+                var guardedLocation = L.latLng(latSitio, lngSitio);
+                var userPosition = L.latLng(lat, lon);
+                if(map.distance(userPosition, guardedLocation) <= thresholdDistance) {
+                    estas()
+                    recargaSalaGin()
+                }else{
+                    recargaSalaGin()
+                    alert("no estas en la posicion")
+                }
+            })
+        }
+    }
+    ajax.send(formData)
+}
+
+function estas(){
+    var token = document.getElementById('token').getAttribute("content");
+    var formData = new FormData();
+    formData.append('_token', token);
+    var ajax = objetoAjax();
+    ajax.open("POST", "verificar", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            var respuesta = JSON.parse(this.responseText);
+            console.log(respuesta)
+            recargaSalaGin()
+            if(respuesta==0){alert("Estas en la posicion pero quedan tus compañeros")}
+            if(respuesta==1){alert("Correcto !!")}
+            if(respuesta==2){alert("Ya te has validado no te preocupes mi rey")}
+        }
+    }
+    ajax.send(formData)
+}
+
 
 //partida en curso
 /* function partida() {
