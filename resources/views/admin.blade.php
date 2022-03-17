@@ -27,27 +27,27 @@
     <form method="POST" onsubmit="crearJS(); return false;" id="formcrear" enctype="multipart/form-data">
         <div class="form-group">
         <label class="col-sm-2 col-form-label">Nombre:</label>
-        <input type="text" class="form-control" id="nom_loc" name="nom_loc" placeholder="Introduce un nombre" value="{{old('nom_loc')}}">
+        <input type="text" class="form-control" id="nom_loc" name="nom_loc" placeholder="Introduce un nombre" value="{{old('nom_loc')}}" required>
         </div>
         <div class="form-group">
         <label class="col-sm-2 col-form-label">Direccion:</label>
-        <input type="text" class="form-control" id="direccion_loc" name="direccion_loc" placeholder="Introduce una direccion" value="{{old('direccion_loc')}}">
+        <input type="text" class="form-control" id="direccion_loc" name="direccion_loc" placeholder="Introduce una direccion" value="{{old('direccion_loc')}}" required>
         </div>
         <div class="form-group">
         <label class="col-sm-2 col-form-label">Foto:</label>
-        <input type="file" class="form-control" id="foto_loc" name="foto_loc">
+        <input type="file" class="form-control" id="foto_loc" name="foto_loc" required>
         </div>
         <div class="form-group">
         <label class="col-form-label">Icono: 1-Metro, 2-Hotel, 3-Mercado, 4-Monumento, 5-Museo, 6-Restaurante</label>
-        <input type="number" class="form-control" id="id_icono" name="id_icono">
+        <input type="number" class="form-control" id="id_icono" name="id_icono" required>
         </div>
         <div class="form-group">
         <label class="col-sm-2 col-form-label">Descripcion:</label>
-        <input type="text" class="form-control" id="descripcion_loc" name="descripcion_loc" placeholder="Introduce una descripcion" value="{{old('descripcion_loc')}}">
+        <input type="text" class="form-control" id="descripcion_loc" name="descripcion_loc" placeholder="Introduce una descripcion" value="{{old('descripcion_loc')}}" required>
         </div>
         <div class="form-group">
         <label class="col-sm-2 col-form-label">Tipo:</label>
-        <input type="text" class="form-control" id="tipo_loc" name="tipo_loc" placeholder="Metro-Restaurante-Mercado-Museo-Monumento-Hotel" value="{{old('tipo_loc')}}"><br>
+        <input type="text" class="form-control" id="tipo_loc" name="tipo_loc" placeholder="Metro-Restaurante-Mercado-Museo-Monumento-Hotel" value="{{old('tipo_loc')}}" required><br>
         </div>
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
@@ -67,7 +67,7 @@
         </div>
     </div>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="js/validarcrud.js"></script>
+    {{-- <script src="js/validarcrud.js"></script> --}}
     <script src="js/crud.js"></script>
 </body>
 </html>

@@ -569,6 +569,7 @@ function comprobarGin() {
 
 
 function comprobarloc(position) {
+    getLocation()
     var thresholdDistance = 100; // In meters
     lat = position.coords.latitude;
     lon = position.coords.longitude;
