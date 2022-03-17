@@ -260,6 +260,7 @@ function getLocation() {
 }
 
 function showPosition(position) {
+
     lat = position.coords.latitude;
     lon = position.coords.longitude;
     if (Object.keys(markerubicacion).length != 0) {
@@ -447,8 +448,8 @@ function recargaSalaGin() {
     ajax.onreadystatechange = function() {
         if (ajax.readyState == 4 && ajax.status == 200) {
             var respuesta = JSON.parse(this.responseText);
-            var id_usu = respuesta.id_usu;
-            //console.log(id_usu);
+            var id_usu = document.getElementById('usuarioID').value
+                //console.log(id_usu);
             var participante = JSON.parse(respuesta.elementos);
             //console.log(participante);
             //console.log(participante[0][0]);
@@ -469,7 +470,8 @@ function recargaSalaGin() {
                 }
                 recarga += '</center>';
                 recarga += '</div>';
-            } else {
+            }
+            if (participante[0][0].estado_sala == 1) {
                 //partida en curso
                 recarga += '<h1>' + respuesta.pistas[0].pista1 + '</h1> ';
                 recarga += '<div class="formgincana">';
@@ -486,11 +488,55 @@ function recargaSalaGin() {
                     }
                 }
                 recarga += '<center>';
-                recarga += '<button class="botton-sala" onclick="recargaSalaGin()">Refrescar</button>';
+                recarga += '<input type="hidden" id="PreguntaNum" value="1">';
+                recarga += '<button class="botton-sala" onclick="comprobarGin()">Validar</button>';
                 recarga += '</center>';
                 recarga += '</div>';
             }
+            if (participante[0][0].estado_sala == 2) {
+                //partida en curso
+                recarga += '<h1>' + respuesta.pistas[0].pista2 + '</h1> ';
+                recarga += '<div class="formgincana">';
+                for (let i = 0; i < participante.length; i++) {
+                    if (participante[i].length != 0) {
+                        recarga += '<p class="input-gincana">' + participante[i][0].mail_usu + '</p>';
+                        recarga += '<div>';
+                        //cruz
+                        /* recarga += '<p><i class="fas fa-times"></i></p>'; */
+                        recarga += '</div>';
 
+
+                    }
+                }
+                recarga += '<center>';
+                recarga += '<input type="hidden" id="PreguntaNum" value="2">';
+                recarga += '<button class="botton-gincana" onclick="comprobarGin()">Validar</button>';
+                recarga += '</center>';
+                recarga += '</div>';
+            }
+            if (participante[0][0].estado_sala == 3) {
+                //partida en curso
+                recarga += '<h1>' + respuesta.pistas[0].pista3 + '</h1> ';
+                recarga += '<div class="formgincana">';
+                for (let i = 0; i < participante.length; i++) {
+                    if (participante[i].length != 0) {
+                        recarga += '<p class="input-gincana">' + participante[i][0].mail_usu + '</p>';
+                        recarga += '<div>';
+                        //cruz
+                        /* recarga += '<p><i class="fas fa-times"></i></p>'; */
+                        recarga += '</div>';
+                    }
+                }
+                recarga += '<center>';
+                recarga += '<input type="hidden" id="PreguntaNum" value="3">';
+                recarga += '<button class="botton-gincana" onclick="comprobarGin()">Validar</button>';
+                recarga += '</center>';
+                recarga += '</div>';
+            }
+            if (participante[0][0].estado_sala == 4) {
+                //partida en curso
+                recarga += '<h1> GINCANA COMPLETADA!! Felicidades</h1> ';
+            }
         }
         info.innerHTML = recarga;
     }
@@ -498,20 +544,81 @@ function recargaSalaGin() {
 }
 
 //partida en curso
-function iniciarpartida() {
+
+function empezarPartida() {
     var token = document.getElementById('token').getAttribute("content");
-    var info = document.getElementById("info");
     var formData = new FormData();
     formData.append('_token', token);
     formData.append('_method', "POST");
-
     var ajax = objetoAjax();
+    ajax.open("POST", "empezarPartida", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            recargaSalaGin()
+        }
+    }
+    ajax.send(formData)
+}
 
-    ajax.open("POST", "partida", true);
+function comprobarGin() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(comprobarloc);
+    } else {
+        alert("Geolocation is not supported by this browser");
+    }
+}
+
+
+function comprobarloc(position) {
+    var thresholdDistance = 100; // In meters
+    lat = position.coords.latitude;
+    lon = position.coords.longitude;
+    //var userPosition = L.latLng(lat, lon);
+    var token = document.getElementById('token').getAttribute("content");
+    var formData = new FormData();
+    formData.append('_token', token);
+    var ajax = objetoAjax();
+    ajax.open("POST", "checkloc", true);
     ajax.onreadystatechange = function() {
         if (ajax.readyState == 4 && ajax.status == 200) {
             var respuesta = JSON.parse(this.responseText);
+            var pregunta = document.getElementById('PreguntaNum').value
+            console.log(respuesta)
+            var localizacion = eval("respuesta[0].loc" + pregunta)
+            L.esri.Geocoding.geocode({
+                apikey: 'AAPKbfa578cdbb364f19acd6f66898f69789JE8ubfzUeNcE_1-_m2wPRTzApVhYnHEmSOkCXQ-8Yn3wxhHQkRRyP69j7CkXt-ev'
+            }).text(localizacion).run(function(err, results, response) {
+                var latSitio = results.results[0].latlng.lat
+                var lngSitio = results.results[0].latlng.lng
+                var guardedLocation = L.latLng(latSitio, lngSitio);
+                var userPosition = L.latLng(lat, lon);
+                if (map.distance(userPosition, guardedLocation) <= thresholdDistance) {
+                    estas()
+                    recargaSalaGin()
+                } else {
+                    recargaSalaGin()
+                    alert("no estas en la posicion")
+                }
+            })
+        }
+    }
+    ajax.send(formData)
+}
+
+function estas() {
+    var token = document.getElementById('token').getAttribute("content");
+    var formData = new FormData();
+    formData.append('_token', token);
+    var ajax = objetoAjax();
+    ajax.open("POST", "verificar", true);
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            var respuesta = JSON.parse(this.responseText);
+            console.log(respuesta)
             recargaSalaGin()
+            if (respuesta == 0) { alert("Estas en la posicion pero quedan tus compañeros") }
+            if (respuesta == 1) { alert("Correcto !!") }
+            if (respuesta == 2) { alert("Ya te has validado no te preocupes mi rey") }
         }
     }
     ajax.send(formData)

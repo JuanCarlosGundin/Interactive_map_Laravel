@@ -50,9 +50,9 @@ Route::put('actualizar/{id}',[MapaController::class,'actualizar']);
 //Gincana
 Route::post('gincanaPOST',[MapaController::class,'gincanaPOST']);
 Route::post('recargaSala',[MapaController::class,'recargaSala']);
-
-//empieza la gimcana
-Route::post('partida',[MapaController::class,'partida']);
+Route::post('empezarPartida',[MapaController::class,'empezarPartida']);
+Route::post('checkloc',[MapaController::class,'checkloc']);
+Route::post('verificar',[MapaController::class,'verificar']);
 
 //añadir etiqueta
 Route::post('anadiretiqueta',[MapaController::class,'anadiretiqueta']);

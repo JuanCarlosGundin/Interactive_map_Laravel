@@ -225,23 +225,93 @@ class MapaController extends Controller
         $id_sala=session()->get('id_sala');
         $id_usu=session()->get('id_usu');
         $elementos = [];
+        $sala=DB::select("SELECT * FROM tbl_sala where id=?",[$id_sala]);
         $consulta_creador=DB::select("SELECT * FROM tbl_sala inner join tbl_users on tbl_users.id=tbl_sala.id_creador where tbl_sala.id=?",[$id_sala]);
         $consulta_jug2=DB::select("SELECT * FROM tbl_sala inner join tbl_users on tbl_users.id=tbl_sala.id_jug2 where tbl_sala.id=?",[$id_sala]);
         $consulta_jug3=DB::select("SELECT * FROM tbl_sala inner join tbl_users on tbl_users.id=tbl_sala.id_jug3 where tbl_sala.id=?",[$id_sala]);
         array_push($elementos, $consulta_creador, $consulta_jug2, $consulta_jug3);
-        return response()->json(array('id_usu'=> $id_usu, 'pistas'=>$pistas ,'elementos'=>json_encode($elementos)));
-    }
+        return response()->json(array('id_usu'=> $id_usu,'sala'=>$sala, 'pistas'=>$pistas ,'elementos'=>json_encode($elementos)));
 
-    public function partida(){
+    }
+    
+    /* public function empezarPartida(){
+        $pistas=DB::select("SELECT * FROM tbl_juego where id='1';");
         $id_sala=session()->get('id_sala');
         $id_usu=session()->get('id_usu');
+        $elementos = [];
         $consulta_creador=DB::select("SELECT * FROM tbl_sala inner join tbl_users on tbl_users.id=tbl_sala.id_creador where tbl_sala.id=?",[$id_sala]);
-        if ($id_usu==$consulta_creador[0]->id_creador){
-            DB::table('tbl_sala')->where('id','=',$id_sala)->update(["estado_sala"=>'1']);
-        }
+        $consulta_jug2=DB::select("SELECT * FROM tbl_sala inner join tbl_users on tbl_users.id=tbl_sala.id_jug2 where tbl_sala.id=?",[$id_sala]);
+        $consulta_jug3=DB::select("SELECT * FROM tbl_sala inner join tbl_users on tbl_users.id=tbl_sala.id_jug3 where tbl_sala.id=?",[$id_sala]);
+        array_push($elementos, $consulta_creador, $consulta_jug2, $consulta_jug3);
+        $contador=DB::select("SELECT count(id_creador) + count(id_jug2) + count(id_jug3) as contador FROM tbl_sala where id=?",[$id_sala]);
+        DB::table('tbl_sala')->where('id','=',$id_sala)->update(["jugadores_sala"=>$contador[0]->contador]);
+        DB::table('tbl_sala')->where('id','=',$id_sala)->update(["estado_sala"=>1]);
+        return response()->json(array('id_usu'=> $id_usu, 'pistas'=>$pistas ,'elementos'=>json_encode($elementos)));
+    } */
+
+    public function empezarPartida(){
+        $id_sala=session()->get('id_sala');
+        DB::table('tbl_sala')->where('id','=',$id_sala)->update(["estado_sala"=>'1']);
         $contador=DB::select("SELECT count(id_creador) + count(id_jug2) + count(id_jug3) as contador FROM tbl_sala where id=?",[$id_sala]);
         DB::table('tbl_sala')->where('id','=',$id_sala)->update(["jugadores_sala"=>$contador[0]->contador]);
         return response()->json(array('resultado'=> 'OK'));
+    }
+    public function checkloc(){
+        $id_sala=session()->get('id_sala');
+        $loc=DB::select("SELECT * FROM tbl_sala 
+        inner join tbl_users on tbl_users.id=tbl_sala.id_creador
+        inner join tbl_juego on tbl_juego.id=tbl_sala.id_juego 
+        where tbl_sala.id=?",[$id_sala]);
+        return response()->json($loc);
+
+    }
+    public function verificar(){
+        
+        $id_usu=session()->get('id_usu');
+        $id_sala=session()->get('id_sala');
+        $verificacion1=DB::select("SELECT verificacion1,verificacion2,verificacion3 FROM tbl_sala  
+        where tbl_sala.id=?",[$id_sala]);
+        $jugadores=DB::select("SELECT jugadores_sala FROM tbl_sala where tbl_sala.id=?",[$id_sala]);
+        $next=0;
+        try {
+        if($verificacion1[0]->{'verificacion1'}==$id_usu){$next=2; return response()->json($next);}
+       if($verificacion1[0]->{'verificacion1'}==null){ 
+        DB::table('tbl_sala')->where('id','=',$id_sala)->update(['verificacion1'=>$id_usu]);
+            if($jugadores[0]->{'jugadores_sala'}==1){
+                $estado=DB::select("SELECT estado_sala FROM tbl_sala where tbl_sala.id=?",[$id_sala]);
+                $suma= $estado[0]->{'estado_sala'}+1;
+                DB::table('tbl_sala')->where('id','=',$id_sala)->update(["verificacion1"=>null,"estado_sala"=>$suma]);
+                $next=1;
+                return response()->json($next);
+            }
+        return response()->json($next);
+        }
+        if($verificacion1[0]->{'verificacion2'}==$id_usu){$next=2; return response()->json($next);}
+        if($verificacion1[0]->{'verificacion2'}==null){ 
+        DB::table('tbl_sala')->where('id','=',$id_sala)->update(['verificacion2'=>$id_usu]);
+            if($jugadores[0]->{'jugadores_sala'}==2){
+                $estado=DB::select("SELECT estado_sala FROM tbl_sala where tbl_sala.id=?",[$id_sala]);
+                $suma = $estado[0]->{'estado_sala'}+1;
+                DB::table('tbl_sala')->where('id','=',$id_sala)->update(["verificacion1"=>null,"verificacion2"=>null,"estado_sala"=>$suma]);
+                $next=1;
+                return response()->json($next);
+            }
+        return response()->json($next);
+        }
+       if($verificacion1[0]->{'verificacion3'}==null){ 
+            DB::table('tbl_sala')->where('id','=',$id_sala)->update(["verificacion3"=>$id_usu]);
+            if($jugadores[0]->{'jugadores_sala'}==3){
+                $estado=DB::select("SELECT estado_sala FROM tbl_sala where tbl_sala.id=?",[$id_sala]);
+                $suma = $estado[0]->{'estado_sala'}+1;
+                DB::table('tbl_sala')->where('id','=',$id_sala)->update(["verificacion1"=>null,"verificacion2"=>null,"verificacion3"=>null,"estado_sala"=>$suma]);
+                $next=1;
+                return response()->json($next);
+            }
+           return response()->json($next);
+        }
+       return response()->json($next);}catch(\Exception $e) {
+        return response()->json($e->getMessage());
+       }
     }
 
     public function anadiretiqueta(Request $request) {
