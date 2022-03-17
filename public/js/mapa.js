@@ -509,7 +509,7 @@ function recargaSalaGin() {
                 }
                 recarga += '<center>';
                 recarga += '<input type="hidden" id="PreguntaNum" value="2">';
-                recarga += '<button class="botton-gincana" onclick="comprobarGin()">Validar</button>';
+                recarga += '<button class="botton-sala" onclick="comprobarGin()">Validar</button>';
                 recarga += '</center>';
                 recarga += '</div>';
             }
@@ -528,7 +528,7 @@ function recargaSalaGin() {
                 }
                 recarga += '<center>';
                 recarga += '<input type="hidden" id="PreguntaNum" value="3">';
-                recarga += '<button class="botton-gincana" onclick="comprobarGin()">Validar</button>';
+                recarga += '<button class="botton-sala" onclick="comprobarGin()">Validar</button>';
                 recarga += '</center>';
                 recarga += '</div>';
             }
