@@ -8,7 +8,6 @@
     <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-    <script src="../public/js/login.js"></script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,14 +19,16 @@
         <img src="../public/img/logo.png">
     </div>
     <div class="fade-in" id="container">    
-    <form action="{{url('loginPost')}}" method="POST">
+    <form action="{{url('loginPost')}}" method="POST" id="formlogin">
         <h1>Log In</h1>  
         @csrf
         {{method_field('POST')}}
-        <input type="email" name="mail_usu" placeholder="E-mail">
-        <input type="password" name="contra_usu" placeholder="Password">
+        <input type="email" name="mail_usu" id="mail_usu" placeholder="E-mail">
+        <input type="password" name="contra_usu" id="contra_usu" placeholder="Password">
         <input type="submit" value="Log in">
     </form>
     </div>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../public/js/login.js"></script>
 </body>
 </html>

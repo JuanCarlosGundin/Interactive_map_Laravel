@@ -464,10 +464,9 @@ function recargaSalaGin() {
                 }
                 recarga += '<center>';
                 if (id_usu == participante[0][0].id_creador) {
-                    recarga += '<button class="botton-sala" onclick="iniciarpartida()">Empezar</button>';
-                } else {
-                    recarga += '<button class="botton-sala" onclick="recargaSalaGin()">Refrescar</button>';
+                    recarga += '<button class="botton-sala" onclick="empezarPartida()">Empezar</button>';
                 }
+                recarga += '<button class="botton-sala" onclick="recargaSalaGin()">Refrescar</button>';
                 recarga += '</center>';
                 recarga += '</div>';
             }
@@ -480,9 +479,9 @@ function recargaSalaGin() {
                         recarga += '<div class="input-gincana">';
                         recarga += '<p>' + participante[i][0].mail_usu + '</p>';
                         recarga += '</div>';
-                        recarga += '<div class="icono-gincana">';
+                        /* recarga += '<div class="icono-gincana">';
                         recarga += '<p><i class="fas fa-check"></i></p>';
-                        recarga += '</div>';
+                        recarga += '</div>'; */
                         //cruz
                         /* recarga += '<p><i class="fas fa-times"></i></p>'; */
                     }
@@ -597,7 +596,11 @@ function comprobarloc(position) {
                     recargaSalaGin()
                 } else {
                     recargaSalaGin()
-                    alert("no estas en la posicion")
+                    swal({
+                        title: "Aviso",
+                        text: "no estas en la posicion",
+                        icon: "info",
+                    });
                 }
             })
         }
@@ -616,9 +619,27 @@ function estas() {
             var respuesta = JSON.parse(this.responseText);
             console.log(respuesta)
             recargaSalaGin()
-            if (respuesta == 0) { alert("Estas en la posicion pero quedan tus compañeros") }
-            if (respuesta == 1) { alert("Correcto !!") }
-            if (respuesta == 2) { alert("Ya te has validado no te preocupes mi rey") }
+            if (respuesta == 0) {
+                swal({
+                    title: "Aviso",
+                    text: "Estas en la posicion pero quedan tus compañeros",
+                    icon: "info",
+                })
+            }
+            if (respuesta == 1) {
+                swal({
+                    title: "Correcto !!r",
+                    text: "Estas en la posicion",
+                    icon: "success",
+                })
+            }
+            if (respuesta == 2) {
+                swal({
+                    title: "Hey",
+                    text: "Ya te has validado no te preocupes mi rey",
+                    icon: "info",
+                })
+            }
         }
     }
     ajax.send(formData)
