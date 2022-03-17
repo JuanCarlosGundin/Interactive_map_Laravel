@@ -53,7 +53,7 @@ Diego Soledispa - Diseñador web, Programador front-end, Desarrollador back-end
 Juan Carlos Gundin - Diseñador web, Programador front-end, Desarrollador back-end
 
 # Usuarios de entrada
->1.-Admin:
+>1.-User:
   >>user@gmail.com - qweQWE123
   
   >>user2@gmail.com - qweQWE123
@@ -62,7 +62,7 @@ Juan Carlos Gundin - Diseñador web, Programador front-end, Desarrollador back-e
   
   >>user4@gmail.com - qweQWE123
 
->2.-User:
+>2.-Admin:
   >>admin@gmail.com - qweQWE123
 
 # Expresiones de Gratitud 🎁
