@@ -1,6 +1,6 @@
 # PR04-Mapas
 
-Este proyecto se basa en la simulacion de un mapa de navegación, en el cual nos permite ver diferentes ubicaciones variadas y lar uta para llegar hasta ellas,
+Este proyecto se basa en la simulacion de un mapa de navegación, en el cual nos permite ver diferentes ubicaciones variadas y la ruta para llegar hasta ellas,
 a su vez tendremos la posibilidad de jugar a nuestra gincana interactiva, la cual consistira en encontrar las ubicaciones con las pistas que se nos proporcionan.
 
 # Pre-requisitos 📋
@@ -27,13 +27,19 @@ a su vez tendremos la posibilidad de jugar a nuestra gincana interactiva, la cua
 
 >6.-Finalmente, Laravel puede pedir que se ejecute el comando ```php artisan key:generate``` para generar una nueva variable de entorno APP_KEY
 
->7.-Crear la base de datos mediante migraciones o manualmente.
+>7.-Tendremos que mover algunos ficheros para que se muestren de manera correcta:
+>>Nos dirigremos a "C:\xampp\htdocs\Nombre Proyecto\public\img\foto" y copiaremos el contenido de dicha carpeta en "C:\xampp\htdocs\Nombre Proyecto\storage\app\public\foto"
+>>Lo siguiente es hacer lo mismo pero para los iconos. Nos dirigremos a "C:\xampp\htdocs\Nombre Proyecto\public\img\icono" y copiaremos el contenido de dicha carpeta en "C:\xampp\htdocs\Nombre Proyecto\storage\app\public\icono".
 
->8.- Una vez descargado el contenido de nuestro proyecto, lo que tendremos que hacer es en nuestro XAMPP iniciar el servicio de apache.
+>8.-El siguiente paso sera crear el link simbolico con el comando _"php artisan storage:link"_.
 
->9.- Abrimos nuestro navegador favorito (recomendamos Google Chrome o Mozilla Firefox).
+>9.-Crear la base de datos mediante migraciones o manualmente.
 
->10.- Como url colocaremos lo siguiente _"localhost/"_ y podremos ver las carpetas que contiene nuestro proyecto. Si no deseamos ver las carpetas al final de la ruta añadimos _"/public"_ con lo que nos quedaria _"localhost/NombreProyecto/public/"_ y accederiamos a la pagina principal de nuestro proyecto.
+>10.- Una vez descargado el contenido de nuestro proyecto, lo que tendremos que hacer es en nuestro XAMPP iniciar el servicio de apache.
+
+>11.- Abrimos nuestro navegador favorito (recomendamos Google Chrome o Mozilla Firefox).
+
+>12.- Como url colocaremos lo siguiente _"localhost/"_ y podremos ver las carpetas que contiene nuestro proyecto. Si no deseamos ver las carpetas al final de la ruta añadimos _"/public"_ con lo que nos quedaria _"localhost/NombreProyecto/public/"_ y accederiamos a la pagina principal de nuestro proyecto.
 
 
 # Despliegue 📦
@@ -45,7 +51,7 @@ Tambien contamos con hosting a traves del link (https://mapamdj.epizy.com)
 Visual Studio Code - El editor de codigo que hemos utilizado para realizar el pryecto
 
 # Versionado 📌
-0.1.64
+0.1.65
 
 # Autores ✒️
 Miguel Gras - Diseñador web, Programador front-end, Desarrollador back-end
