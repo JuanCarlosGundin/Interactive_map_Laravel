@@ -45,7 +45,7 @@ Tambien contamos con hosting a traves del link (https://mapamdj.epizy.com)
 Visual Studio Code - El editor de codigo que hemos utilizado para realizar el pryecto
 
 # Versionado 📌
-0.1.61
+0.1.64
 
 # Autores ✒️
 Miguel Gras - Diseñador web, Programador front-end, Desarrollador back-end
