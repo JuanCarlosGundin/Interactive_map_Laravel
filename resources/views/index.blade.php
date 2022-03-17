@@ -106,7 +106,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.0/esri-leaflet-geocoder.css">
     <script src="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.1.0/esri-leaflet-geocoder.js"></script>
     <script src="js/mapa.js"></script>
-    <div id="infomap"></div>
+    <div id="infomap"></div><br><br>
     <div id="info"></div>
 </body>
 
