@@ -422,6 +422,8 @@ function gincanaGET(valor) {
                 mensaje.innerHTML = '<p>El nombre de la sala ya existe</p>';
             } else if (respuesta.resultado == "NOKllena") {
                 mensaje.innerHTML = '<p>Sala llena :(</p>';
+            } else if (respuesta.resultado == "NOKmismo") {
+                mensaje.innerHTML = '<p>Ya estas dentro, clica recarga sala</p>';
             } else {
                 mensaje.innerHTML = '<p>Funciona</p>';
                 recargaSalaGin();

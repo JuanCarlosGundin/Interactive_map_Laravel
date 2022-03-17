@@ -187,19 +187,23 @@ class MapaController extends Controller
                 return response()->json(array('resultado'=> 'NOKunirse'));
             }else{
                 $idsala= DB::table('tbl_sala')->where('nom_sala','=',$nom_sala)->where('estado_sala','=',"0")->first();
-                DB::select("SELECT * FROM tbl_sala where id=?",[$idsala->id]);
+                $player= DB::table('tbl_sala')->where('id','=',$idsala->id)->first();
                 $id_jug2 = DB::table('tbl_sala')->where('nom_sala','=',$nom_sala)->whereNotNull('id_jug2')->count();
                 $id_jug3 = DB::table('tbl_sala')->where('nom_sala','=',$nom_sala)->whereNotNull('id_jug3')->count();
-                if ($id_jug2==0) {
-                    DB::table('tbl_sala')->where('nom_sala','=',$nom_sala)->update(["id_jug2"=>$id]);
-                    $request->session()->put('id_sala',$idsala->id);
-                    return response()->json(array('resultado'=> 'OK'));
-                }else if ($id_jug3==0){
-                    DB::table('tbl_sala')->where('nom_sala','=',$nom_sala)->update(["id_jug3"=>$id]);
-                    $request->session()->put('id_sala',$idsala->id);
-                    return response()->json(array('resultado'=> 'OK'));
+                if($id == $player->id_creador || $id == $player->id_jug2 || $id == $player->id_jug3){
+                    return response()->json(array('resultado'=> 'NOKmismo'));
                 }else{
-                    return response()->json(array('resultado'=> 'NOKllena'));
+                    if ($id_jug2==0) {
+                        DB::table('tbl_sala')->where('nom_sala','=',$nom_sala)->update(["id_jug2"=>$id]);
+                        $request->session()->put('id_sala',$idsala->id);
+                        return response()->json(array('resultado'=> 'OK'));
+                    }else if ($id_jug3==0){
+                        DB::table('tbl_sala')->where('nom_sala','=',$nom_sala)->update(["id_jug3"=>$id]);
+                        $request->session()->put('id_sala',$idsala->id);
+                        return response()->json(array('resultado'=> 'OK'));
+                    }else{
+                        return response()->json(array('resultado'=> 'NOKllena'));
+                    }
                 }
             }
         }else{
