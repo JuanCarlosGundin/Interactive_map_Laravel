@@ -15,3 +15,7 @@ body {
 img.huechange {
     filter: hue-rotate(120deg);
 }
+
+.imagen {
+    width: 20vh;
+}

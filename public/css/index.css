@@ -1,0 +1,187 @@
+.container {
+    width: 100%;
+}
+
+.index-div1 {
+    float: left;
+    width: 80%;
+}
+
+.index-div2 {
+    width: 10vh;
+    height: 90px;
+    float: right;
+}
+
+.logoutic {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    width: 5vh;
+    float: right;
+}
+
+.gincanaic {
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    width: 9vh;
+    float: right;
+}
+
+.bt-logout {
+    background-color: white;
+    border-color: black;
+    float: right;
+}
+
+.input-index {
+    font-size: small;
+}
+
+.admin-div1 {
+    margin-left: 33%;
+    width: 12%;
+    float: right;
+}
+
+.container-map {
+    position: relative;
+}
+
+.formgincana {
+    position: absolute;
+    left: 0;
+    right: 0;
+    padding-top: 10px;
+    margin: auto;
+    width: 260px;
+    height: 200px;
+    border-radius: 5px;
+    background: rgba(222, 184, 135, 0.50);
+    box-shadow: 1px 1px 15px #000;
+    border-radius: 6px;
+}
+
+.input-gincana {
+    font-family: 'Open Sans Condensed', sans-serif;
+    text-decoration: none;
+    text-align: center;
+    position: relative;
+    width: 80%;
+    /* float: left; */
+    display: block;
+    margin: 6px auto;
+    font-size: 17px;
+    color: #fff;
+    /* padding: 3px; */
+    border-radius: 6px;
+    border: none;
+    background: rgba(163, 130, 86, 0.75);
+}
+
+.icono-gincana {
+    font-family: 'Open Sans Condensed', sans-serif;
+    text-decoration: none;
+    text-align: center;
+    position: relative;
+    width: 20%;
+    float: left;
+    display: block;
+    margin: 9px auto;
+    font-size: 17px;
+    color: #fff;
+    padding: 3px;
+    border-radius: 6px;
+    border: none;
+    background: rgba(163, 130, 86, 0.75);
+}
+
+.input-gincana p,
+.icono-gincana p {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.rojo {
+    color: red;
+}
+
+.verde {
+    color: green;
+}
+
+.input-gincana:focus {
+    outline: none;
+    box-shadow: 3px 3px 10px #333;
+    background: rgba(163, 130, 86, 1);
+}
+
+.botton-gincana {
+    font-family: 'Open Sans Condensed', sans-serif;
+    text-decoration: none;
+    left: 9.5%;
+    position: relative;
+    width: 40%;
+    /* margin: 9px auto; */
+    margin-right: 5px;
+    font-size: 17px;
+    color: #fff;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    background: rgba(163, 130, 86, 0.75);
+}
+
+.botton-sala {
+    font-family: 'Open Sans Condensed', sans-serif;
+    text-decoration: none;
+    position: relative;
+    width: 40%;
+    /* margin: 9px auto; */
+    margin-right: 5px;
+    font-size: 17px;
+    color: #fff;
+    padding: 8px;
+    border-radius: 6px;
+    border: none;
+    background: rgba(163, 130, 86, 0.75);
+}
+
+.map {
+    width: 100%;
+}
+
+h1 {
+    font-family: 'Open Sans Condensed', sans-serif;
+    position: relative;
+    margin-top: 0px;
+    text-align: center;
+    font-size: 30px;
+    /* color: #ddd; */
+    text-shadow: 1px 1px 1px #000;
+}
+
+.titulo {
+    font-family: 'Open Sans Condensed', sans-serif;
+    position: relative;
+    margin-top: 0px;
+    text-align: center;
+    font-size: 40px;
+    color: #ddd;
+    text-shadow: 3px 3px 10px #000;
+}
+
+.yellow {
+    color: yellow;
+}
+
+.grey {
+    color: grey;
+}
+
+.div-info {
+    float: left;
+}
+
+.div-fav {
+    float: right;
+}
