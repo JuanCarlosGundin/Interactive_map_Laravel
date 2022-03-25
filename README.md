@@ -49,6 +49,9 @@ Tambien contamos con hosting a traves del link (https://mapamdj.epizy.com)
 
 # Construido con 🛠️
 Visual Studio Code - El editor de codigo que hemos utilizado para realizar el pryecto
+Laravel-PHP
+JavaScrip
+SQL
 
 # Versionado 📌
 0.1.65
